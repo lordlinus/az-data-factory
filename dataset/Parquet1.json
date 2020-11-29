@@ -5,6 +5,9 @@
 			"referenceName": "RawDataLakeStorage",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "Sink"
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {

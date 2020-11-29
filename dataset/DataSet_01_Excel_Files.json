@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "RawData"
+			"name": "Source"
 		},
 		"annotations": [],
 		"type": "Excel",
