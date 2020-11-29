@@ -19,6 +19,10 @@
 			"type": "string",
 			"defaultValue": "https://demogentingrawdatastore.dfs.core.windows.net"
 		},
+		"triggerOnFileUpload_DataSet-01_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/7c1d967f-37f1-4047-bef7-05af9aa80fe2/resourceGroups/genting-rg/providers/Microsoft.Storage/storageAccounts/demogentingrawdatastore"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -54,6 +58,9 @@
 					},
 					"RawDataLakeStorage_properties_typeProperties_url": {
 						"value": "[parameters('RawDataLakeStorage_properties_typeProperties_url')]"
+					},
+					"triggerOnFileUpload_DataSet-01_properties_typeProperties_scope": {
+						"value": "[parameters('triggerOnFileUpload_DataSet-01_properties_typeProperties_scope')]"
 					}
 				}
 			},
