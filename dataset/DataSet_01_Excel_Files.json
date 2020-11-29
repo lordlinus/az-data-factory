@@ -19,6 +19,47 @@
 			},
 			"firstRowAsHeader": true
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "pii_name",
+				"type": "String"
+			},
+			{
+				"name": "pii_email",
+				"type": "String"
+			},
+			{
+				"name": "pii_mobile",
+				"type": "String"
+			},
+			{
+				"name": "attribute1",
+				"type": "String"
+			},
+			{
+				"name": "attribute2",
+				"type": "String"
+			},
+			{
+				"name": "attribute3",
+				"type": "String"
+			},
+			{
+				"name": "attribute4",
+				"type": "String"
+			},
+			{
+				"name": "attribute5",
+				"type": "String"
+			},
+			{
+				"name": "attribute6",
+				"type": "String"
+			},
+			{
+				"name": "attribute7",
+				"type": "String"
+			}
+		]
 	}
 }
