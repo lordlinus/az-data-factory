@@ -2,7 +2,7 @@
 	"name": "triggerOnFileUpload_DataSet-01",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Stopped",
+		"runtimeState": "Started",
 		"pipelines": [
 			{
 				"pipelineReference": {
