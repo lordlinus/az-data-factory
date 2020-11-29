@@ -14,7 +14,7 @@
 			],
 			"sinks": [],
 			"transformations": [],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: true,\n\tlimit: 100,\n\tpurgeFiles: true,\n\tformat: 'excel',\n\tfileSystem: 'raw',\n\tsheetName: 'Sheet1',\n\tfirstRowAsHeader: true,\n\twildcardPaths:['dataset-01/*']) ~> source1"
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: true,\n\tignoreNoFilesFound: true,\n\tlimit: 100,\n\tpurgeFiles: true,\n\tformat: 'excel',\n\tfileSystem: 'raw',\n\tsheetName: 'Sheet1',\n\tfirstRowAsHeader: true,\n\twildcardPaths:['dataset-01/*'],\n\tpartitionBy('roundRobin', 2)) ~> source1"
 		}
 	}
 }
