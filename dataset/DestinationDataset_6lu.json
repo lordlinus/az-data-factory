@@ -1,0 +1,20 @@
+{
+	"name": "DestinationDataset_6lu",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RawDataLakeStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "dataset-01",
+				"fileSystem": "processed"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	}
+}
