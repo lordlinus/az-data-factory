@@ -1,0 +1,29 @@
+{
+	"name": "PowerQuery1",
+	"properties": {
+		"type": "WranglingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "AzureSynapseAnalyticsTable1",
+					"script": "",
+					"dataset": {
+						"referenceName": "AzureSynapseAnalyticsTable1",
+						"type": "DatasetReference"
+					}
+				}
+			],
+			"sinks": [
+				{
+					"name": "Sink1",
+					"dataset": {
+						"referenceName": "Parquet1",
+						"type": "DatasetReference"
+					},
+					"script": "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> Sink1"
+				}
+			],
+			"script": "section Section1;\r\nshared AzureSynapseAnalyticsTable1 = let\r\n  AdfDoc = Sql.Database(\"sql-server-pool-01.database.windows.net\", \"process-pool-01\"),\r\n  InputTable = AdfDoc{[Schema = \"dbo\", Item = \"raw_dataset_01\"]}[Data]\r\nin\r\n  InputTable;\r\nshared UserQuery = let\r\n  Source = AzureSynapseAnalyticsTable1\r\nin\r\n  Source;\r\n"
+		}
+	}
+}
