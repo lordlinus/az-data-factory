@@ -1,6 +1,7 @@
 {
 	"name": "triggerOnFileUpload_DataSet-01",
 	"properties": {
+		"description": "Trigger on file upload",
 		"annotations": [],
 		"runtimeState": "Started",
 		"pipelines": [],
