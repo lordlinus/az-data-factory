@@ -56,7 +56,16 @@
 							"secureOutput": false,
 							"secureInput": false
 						},
-						"userProperties": [],
+						"userProperties": [
+							{
+								"name": "Source",
+								"value": "@{'dataset-01'}//"
+							},
+							{
+								"name": "Destination",
+								"value": "dbo.@{concat('raw-','tbl-dataset-01')}"
+							}
+						],
 						"typeProperties": {
 							"source": {
 								"type": "ExcelSource",
@@ -77,7 +86,112 @@
 								"tableOption": "autoCreate"
 							},
 							"enableStaging": false,
-							"enableSkipIncompatibleRow": true
+							"enableSkipIncompatibleRow": true,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "pii_name",
+											"type": "String"
+										},
+										"sink": {
+											"name": "pii_name",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "pii_email",
+											"type": "String"
+										},
+										"sink": {
+											"name": "pii_email",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "pii_mobile",
+											"type": "String"
+										},
+										"sink": {
+											"name": "pii_mobile",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "attribute1",
+											"type": "String"
+										},
+										"sink": {
+											"name": "attribute1",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "attribute2",
+											"type": "String"
+										},
+										"sink": {
+											"name": "attribute2",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "attribute3",
+											"type": "String"
+										},
+										"sink": {
+											"name": "attribute3",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "attribute4",
+											"type": "String"
+										},
+										"sink": {
+											"name": "attribute4",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "attribute5",
+											"type": "String"
+										},
+										"sink": {
+											"name": "attribute5",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "attribute6",
+											"type": "String"
+										},
+										"sink": {
+											"name": "attribute6",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "attribute7",
+											"type": "String"
+										},
+										"sink": {
+											"name": "attribute7",
+											"type": "String"
+										}
+									}
+								]
+							}
 						},
 						"inputs": [
 							{
@@ -124,7 +238,7 @@
 							},
 							{
 								"name": "Destination",
-								"value": "@{pipeline().parameters.folderName}//"
+								"value": "processed//"
 							}
 						],
 						"typeProperties": {
@@ -149,6 +263,128 @@
 							"enableStaging": false,
 							"translator": {
 								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "pii_name",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "pii_name",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "pii_email",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "pii_email",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "pii_mobile",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "pii_mobile",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "attribute1",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "attribute1",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "attribute2",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "attribute2",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "attribute3",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "attribute3",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "attribute4",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "attribute4",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "attribute5",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "attribute5",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "attribute6",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "attribute6",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									},
+									{
+										"source": {
+											"name": "attribute7",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "attribute7",
+											"type": "String",
+											"physicalType": "UTF8"
+										}
+									}
+								],
 								"typeConversion": true,
 								"typeConversionSettings": {
 									"allowDataTruncation": true,
@@ -242,12 +478,6 @@
 						}
 					}
 				],
-				"parameters": {
-					"folderName": {
-						"type": "string",
-						"defaultValue": "tmp"
-					}
-				},
 				"folder": {
 					"name": "Pipeline-01"
 				},
@@ -308,7 +538,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Stopped",
+				"runtimeState": "Started",
 				"pipelines": [
 					{
 						"pipelineReference": {
@@ -453,12 +683,6 @@
 					"referenceName": "AzureDataLakeStorageGen2",
 					"type": "LinkedServiceReference"
 				},
-				"parameters": {
-					"folderName": {
-						"type": "string",
-						"defaultValue": "processed"
-					}
-				},
 				"folder": {
 					"name": "Sink"
 				},
@@ -467,10 +691,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileSystem": {
-							"value": "@dataset().folderName",
-							"type": "Expression"
-						}
+						"fileSystem": "processed"
 					},
 					"compressionCodec": "snappy"
 				},
