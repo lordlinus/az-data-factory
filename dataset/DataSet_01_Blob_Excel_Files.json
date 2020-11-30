@@ -5,16 +5,24 @@
 			"referenceName": "RawDataBlobStorage",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"rawFolderName": {
+				"type": "string",
+				"defaultValue": "dataset-01"
+			}
+		},
 		"folder": {
 			"name": "Source"
 		},
 		"annotations": [],
 		"type": "Excel",
 		"typeProperties": {
-			"sheetName": "Sheet1",
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"container": "dataset-01"
+				"container": {
+					"value": "@dataset().rawFolderName",
+					"type": "Expression"
+				}
 			},
 			"firstRowAsHeader": true
 		},
