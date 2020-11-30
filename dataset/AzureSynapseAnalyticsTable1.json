@@ -5,12 +5,6 @@
 			"referenceName": "AzureSynapseAnalytics1",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"tableName": {
-				"type": "string",
-				"defaultValue": "blob-01"
-			}
-		},
 		"folder": {
 			"name": "Sink"
 		},
