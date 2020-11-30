@@ -28,6 +28,16 @@
 							}
 						}
 					},
+					"staging": {
+						"linkedService": {
+							"referenceName": "AzureDataLakeStorageGen2",
+							"type": "LinkedServiceReference"
+						},
+						"folderPath": {
+							"value": "@pipeline().RunId",
+							"type": "Expression"
+						}
+					},
 					"compute": {
 						"coreCount": 8,
 						"computeType": "General"
