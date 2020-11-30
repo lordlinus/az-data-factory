@@ -13,20 +13,7 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [
-					{
-						"name": "tableName",
-						"value": "blob01"
-					},
-					{
-						"name": "Source",
-						"value": "dataset-01//"
-					},
-					{
-						"name": "Destination",
-						"value": "dbo.@{concat('dataset-','pipeline().parameters.tableName')}"
-					}
-				],
+				"userProperties": [],
 				"typeProperties": {
 					"source": {
 						"type": "ExcelSource",
