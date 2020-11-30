@@ -5,6 +5,12 @@
 			"referenceName": "AzureDataLakeStorageGen2",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"folderName": {
+				"type": "string",
+				"defaultValue": "processed"
+			}
+		},
 		"folder": {
 			"name": "Sink"
 		},
@@ -13,7 +19,10 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileSystem": "processed"
+				"fileSystem": {
+					"value": "@dataset().folderName",
+					"type": "Expression"
+				}
 			},
 			"compressionCodec": "snappy"
 		},
