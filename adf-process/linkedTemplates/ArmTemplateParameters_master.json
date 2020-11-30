@@ -5,17 +5,17 @@
 		"factoryName": {
 			"value": "adf-process"
 		},
+		"AzureDataLakeStorageGen2_accountKey": {
+			"value": ""
+		},
 		"AzureSynapseAnalytics1_connectionString": {
 			"value": ""
 		},
 		"RawDataBlobStorage_connectionString": {
 			"value": ""
 		},
-		"RawDataLakeStorage_accountKey": {
-			"value": ""
-		},
-		"RawDataLakeStorage_properties_typeProperties_url": {
-			"value": "https://demogentingrawdatastore.dfs.core.windows.net"
+		"AzureDataLakeStorageGen2_properties_typeProperties_url": {
+			"value": "https://processeddataadlsgen2.dfs.core.windows.net"
 		},
 		"triggerOnFileUploadDataSet-01_properties_typeProperties_scope": {
 			"value": "/subscriptions/7c1d967f-37f1-4047-bef7-05af9aa80fe2/resourceGroups/genting-rg/providers/Microsoft.Storage/storageAccounts/rawdatablobstg01"
