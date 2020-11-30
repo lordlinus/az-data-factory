@@ -227,6 +227,128 @@
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "pii_name",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "pii_name",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "pii_email",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "pii_email",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "pii_mobile",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "pii_mobile",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "attribute1",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "attribute1",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "attribute2",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "attribute2",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "attribute3",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "attribute3",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "attribute4",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "attribute4",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "attribute5",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "attribute5",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "attribute6",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "attribute6",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "attribute7",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "attribute7",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							}
+						],
 						"typeConversion": true,
 						"typeConversionSettings": {
 							"allowDataTruncation": true,
