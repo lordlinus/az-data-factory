@@ -13,10 +13,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileSystem": {
-					"value": "@pipeline().parameters.folderName",
-					"type": "Expression"
-				}
+				"fileSystem": "processed"
 			},
 			"compressionCodec": "snappy"
 		},
