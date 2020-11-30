@@ -55,6 +55,71 @@
 						}
 					}
 				]
+			},
+			{
+				"name": "Move_To_Processed",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Blob_Synapse_Copy_Activity",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ExcelSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"wildcardFileName": "*"
+						}
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings",
+							"copyBehavior": "MergeFiles"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Blob_Excel_Files",
+						"type": "DatasetReference",
+						"parameters": {
+							"rawFolderName": "dataset-01",
+							"workSheet": "Sheet1"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Store_as_Parquet",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"folder": {
