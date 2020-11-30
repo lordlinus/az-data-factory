@@ -44,7 +44,10 @@
 				"outputs": [
 					{
 						"referenceName": "AzureSynapseAnalyticsTable1",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"tableName": "blob-01"
+						}
 					}
 				]
 			}
