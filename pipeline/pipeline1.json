@@ -49,12 +49,6 @@
 				]
 			}
 		],
-		"parameters": {
-			"tableName": {
-				"type": "string",
-				"defaultValue": "blob"
-			}
-		},
 		"folder": {
 			"name": "Pipeline-01"
 		},
