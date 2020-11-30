@@ -19,26 +19,30 @@
 						"type": "ExcelSource",
 						"storeSettings": {
 							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"wildcardFileName": "*"
+							"recursive": true
 						}
 					},
 					"sink": {
 						"type": "SqlDWSink",
 						"allowPolyBase": true,
 						"polyBaseSettings": {
-							"rejectValue": 0,
+							"rejectValue": 100,
 							"rejectType": "value",
 							"useTypeDefault": true
 						},
 						"tableOption": "autoCreate"
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"enableSkipIncompatibleRow": true
 				},
 				"inputs": [
 					{
-						"referenceName": "DataSet_01_Blob_Excel_Files",
-						"type": "DatasetReference"
+						"referenceName": "Blob_Excel_Files",
+						"type": "DatasetReference",
+						"parameters": {
+							"rawFolderName": "dataset-01",
+							"workSheet": "Sheet1"
+						}
 					}
 				],
 				"outputs": [
