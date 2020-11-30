@@ -5,12 +5,6 @@
 			"referenceName": "AzureDataLakeStorageGen2",
 			"type": "LinkedServiceReference"
 		},
-		"parameters": {
-			"folderName": {
-				"type": "string",
-				"defaultValue": "processed"
-			}
-		},
 		"folder": {
 			"name": "Sink"
 		},
