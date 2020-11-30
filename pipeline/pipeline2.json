@@ -33,10 +33,7 @@
 							"referenceName": "AzureDataLakeStorageGen2",
 							"type": "LinkedServiceReference"
 						},
-						"folderPath": {
-							"value": "@pipeline().RunId",
-							"type": "Expression"
-						}
+						"folderPath": "staging/tmp_folder"
 					},
 					"compute": {
 						"coreCount": 8,
