@@ -19,10 +19,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileSystem": {
-					"value": "@dataset().folderName",
-					"type": "Expression"
-				}
+				"fileSystem": "processed"
 			},
 			"compressionCodec": "snappy"
 		},

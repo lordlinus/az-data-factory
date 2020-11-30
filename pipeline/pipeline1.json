@@ -28,10 +28,6 @@
 					{
 						"name": "Destination",
 						"value": "dbo.@{concat('raw-','tbl-dataset-01')}"
-					},
-					{
-						"name": "folderName",
-						"value": "tmp"
 					}
 				],
 				"typeProperties": {
