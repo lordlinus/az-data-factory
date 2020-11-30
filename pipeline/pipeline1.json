@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Raw_DataSet_Copy_Activity",
+				"name": "Blob_Synapse_Copy_Activity",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -30,8 +30,7 @@
 							"rejectValue": 0,
 							"rejectType": "value",
 							"useTypeDefault": true
-						},
-						"tableOption": "autoCreate"
+						}
 					},
 					"enableStaging": false
 				},
@@ -43,10 +42,10 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "AzureSynapseAnalyticsTable1",
+						"referenceName": "AzureSynapseAnalyticsTable",
 						"type": "DatasetReference",
 						"parameters": {
-							"tableName": "blob-01"
+							"tableName": "tbl-dataset-01"
 						}
 					}
 				]
