@@ -76,7 +76,51 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureSynapseAnalyticsTable1')]",
+			"name": "[concat(parameters('factoryName'), '/DataSet_01_Blob_Excel_Files')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RawDataBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"rawFolderName": {
+						"type": "string",
+						"defaultValue": "dataset-01"
+					},
+					"workSheet": {
+						"type": "string",
+						"defaultValue": "Sheet1"
+					}
+				},
+				"folder": {
+					"name": "Source"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": {
+						"value": "@dataset().workSheet",
+						"type": "Expression"
+					},
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": {
+							"value": "@dataset().rawFolderName",
+							"type": "Expression"
+						}
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/RawDataBlobStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSynapseAnalyticsTable')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -87,7 +131,7 @@
 				"parameters": {
 					"tableName": {
 						"type": "string",
-						"defaultValue": "blob-01"
+						"defaultValue": "tbl-dataset-01"
 					}
 				},
 				"folder": {
@@ -99,7 +143,7 @@
 				"typeProperties": {
 					"schema": "dbo",
 					"table": {
-						"value": "@concat('dataset-',pipeline().parameters.tableName)",
+						"value": "@concat('raw-',dataset().tableName)",
 						"type": "Expression"
 					}
 				}
@@ -109,31 +153,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureSynapseAnalyticsTable2')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureSynapseAnalytics1",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "Sink"
-				},
-				"annotations": [],
-				"type": "AzureSqlDWTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "raw_dataset_01"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureSynapseAnalytics1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DataSet_01_Blob_Excel_Files')]",
+			"name": "[concat(parameters('factoryName'), '/DataSet_01_Blob_Excel_Files_copy1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -141,16 +161,32 @@
 					"referenceName": "RawDataBlobStorage",
 					"type": "LinkedServiceReference"
 				},
+				"parameters": {
+					"rawFolderName": {
+						"type": "string",
+						"defaultValue": "dataset-01"
+					},
+					"workSheet": {
+						"type": "string",
+						"defaultValue": "Sheet1"
+					}
+				},
 				"folder": {
 					"name": "Source"
 				},
 				"annotations": [],
 				"type": "Excel",
 				"typeProperties": {
-					"sheetName": "Sheet1",
+					"sheetName": {
+						"value": "@dataset().workSheet",
+						"type": "Expression"
+					},
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"container": "dataset-01"
+						"container": {
+							"value": "@dataset().rawFolderName",
+							"type": "Expression"
+						}
 					},
 					"firstRowAsHeader": true
 				},
@@ -167,7 +203,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Raw_DataSet_Copy_Activity",
+						"name": "Blob_Synapse_Copy_Activity",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -208,21 +244,15 @@
 						],
 						"outputs": [
 							{
-								"referenceName": "AzureSynapseAnalyticsTable1",
+								"referenceName": "AzureSynapseAnalyticsTable",
 								"type": "DatasetReference",
 								"parameters": {
-									"tableName": "blob01"
+									"tableName": "tbl-dataset-01"
 								}
 							}
 						]
 					}
 				],
-				"parameters": {
-					"tableName": {
-						"type": "string",
-						"defaultValue": "blob"
-					}
-				},
 				"folder": {
 					"name": "Pipeline-01"
 				},
@@ -230,7 +260,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/DataSet_01_Blob_Excel_Files')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSynapseAnalyticsTable1')]"
+				"[concat(variables('factoryId'), '/datasets/AzureSynapseAnalyticsTable')]"
 			]
 		},
 		{
