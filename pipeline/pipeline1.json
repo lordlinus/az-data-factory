@@ -81,7 +81,16 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [],
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "@{'dataset-01'}//"
+					},
+					{
+						"name": "Destination",
+						"value": "@{pipeline().parameters.folderName}//"
+					}
+				],
 				"typeProperties": {
 					"source": {
 						"type": "ExcelSource",
