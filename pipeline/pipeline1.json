@@ -205,6 +205,12 @@
 				}
 			}
 		],
+		"parameters": {
+			"folderName": {
+				"type": "string",
+				"defaultValue": "tmp"
+			}
+		},
 		"folder": {
 			"name": "Pipeline-01"
 		},
