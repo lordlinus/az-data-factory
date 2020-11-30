@@ -153,6 +153,29 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Store_as_Parquet')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorageGen2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorageGen2')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -161,7 +184,14 @@
 					{
 						"name": "Blob_Synapse_Copy_Activity",
 						"type": "Copy",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Get Metadata1",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "7.00:00:00",
 							"retry": 0,
@@ -211,6 +241,139 @@
 								}
 							}
 						]
+					},
+					{
+						"name": "Convert_To_Parquet",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Blob_Synapse_Copy_Activity",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "ExcelSource",
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"wildcardFileName": "*"
+								}
+							},
+							"sink": {
+								"type": "ParquetSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings",
+									"copyBehavior": "MergeFiles"
+								},
+								"formatSettings": {
+									"type": "ParquetWriteSettings"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "Blob_Excel_Files",
+								"type": "DatasetReference",
+								"parameters": {
+									"rawFolderName": "dataset-01",
+									"workSheet": "Sheet1"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Store_as_Parquet",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Get Metadata1",
+						"type": "GetMetadata",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "Blob_Excel_Files",
+								"type": "DatasetReference",
+								"parameters": {
+									"rawFolderName": "dataset-01",
+									"workSheet": "Sheet1"
+								}
+							},
+							"fieldList": [
+								"itemName",
+								"itemType",
+								"lastModified"
+							],
+							"storeSettings": {
+								"type": "AzureBlobStorageReadSettings"
+							}
+						}
+					},
+					{
+						"name": "Delete1",
+						"type": "Delete",
+						"dependsOn": [
+							{
+								"activity": "Convert_To_Parquet",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataset": {
+								"referenceName": "Blob_Excel_Files",
+								"type": "DatasetReference",
+								"parameters": {
+									"rawFolderName": "dataset-01",
+									"workSheet": "Sheet1"
+								}
+							},
+							"enableLogging": false,
+							"storeSettings": {
+								"type": "AzureBlobStorageReadSettings",
+								"recursive": true,
+								"wildcardFileName": "*.xlsx"
+							}
+						}
 					}
 				],
 				"folder": {
@@ -220,7 +383,8 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Blob_Excel_Files')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSynapseAnalyticsTable')]"
+				"[concat(variables('factoryId'), '/datasets/AzureSynapseAnalyticsTable')]",
+				"[concat(variables('factoryId'), '/datasets/Store_as_Parquet')]"
 			]
 		},
 		{
