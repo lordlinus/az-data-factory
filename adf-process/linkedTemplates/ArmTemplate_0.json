@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'AzureSynapseAnalytics1'"
 		},
+		"RawDataBlobStorage_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'RawDataBlobStorage'"
+		},
 		"RawDataLakeStorage_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'RawDataLakeStorage'"
@@ -19,9 +23,9 @@
 			"type": "string",
 			"defaultValue": "https://demogentingrawdatastore.dfs.core.windows.net"
 		},
-		"triggerOnFileUpload_DataSet-01_properties_typeProperties_scope": {
+		"triggerOnFileUploadDataSet-01_properties_typeProperties_scope": {
 			"type": "string",
-			"defaultValue": "/subscriptions/7c1d967f-37f1-4047-bef7-05af9aa80fe2/resourceGroups/genting-rg/providers/Microsoft.Storage/storageAccounts/demogentingrawdatastore"
+			"defaultValue": "/subscriptions/7c1d967f-37f1-4047-bef7-05af9aa80fe2/resourceGroups/genting-rg/providers/Microsoft.Storage/storageAccounts/rawdatablobstg01"
 		}
 	},
 	"variables": {
@@ -37,6 +41,19 @@
 				"type": "AzureSqlDW",
 				"typeProperties": {
 					"connectionString": "[parameters('AzureSynapseAnalytics1_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/RawDataBlobStorage')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('RawDataBlobStorage_connectionString')]"
 				}
 			},
 			"dependsOn": []
@@ -80,6 +97,34 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureSynapseAnalytics1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DataSet_01_Blob_Excel_Files')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RawDataBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "Source"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Sheet1",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "dataset-01"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/RawDataBlobStorage')]"
 			]
 		},
 		{
@@ -379,18 +424,18 @@
 						"userProperties": [
 							{
 								"name": "Source",
-								"value": "raw/dataset-01/"
+								"value": "dataset-01//"
 							},
 							{
 								"name": "Destination",
-								"value": "table01"
+								"value": "dbo.raw_dataset_01"
 							}
 						],
 						"typeProperties": {
 							"source": {
 								"type": "ExcelSource",
 								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
+									"type": "AzureBlobStorageReadSettings",
 									"recursive": true,
 									"wildcardFileName": "*"
 								}
@@ -423,7 +468,7 @@
 						},
 						"inputs": [
 							{
-								"referenceName": "DataSet_01_Excel_Files",
+								"referenceName": "DataSet_01_Blob_Excel_Files",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -443,7 +488,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DataSet_01_Excel_Files')]",
+				"[concat(variables('factoryId'), '/datasets/DataSet_01_Blob_Excel_Files')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSynapseAnalyticsTable1')]",
 				"[concat(variables('factoryId'), '/linkedServices/RawDataLakeStorage')]"
 			]
@@ -484,7 +529,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/triggerOnFileUpload_DataSet-01')]",
+			"name": "[concat(parameters('factoryName'), '/triggerOnFileUploadDataSet-01')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -501,10 +546,10 @@
 				],
 				"type": "BlobEventsTrigger",
 				"typeProperties": {
-					"blobPathBeginsWith": "/raw/blobs/dataset-01",
-					"blobPathEndsWith": ".xlsx",
+					"blobPathBeginsWith": "/dataset-01/blobs/",
+					"blobPathEndsWith": "xlsx",
 					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('triggerOnFileUpload_DataSet-01_properties_typeProperties_scope')]",
+					"scope": "[parameters('triggerOnFileUploadDataSet-01_properties_typeProperties_scope')]",
 					"events": [
 						"Microsoft.Storage.BlobCreated"
 					]
