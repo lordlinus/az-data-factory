@@ -1,0 +1,23 @@
+{
+	"name": "DataSet_01_Blob_Excel_Files",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RawDataBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Source"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "dataset-01"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": []
+	}
+}
