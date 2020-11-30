@@ -8,7 +8,7 @@
 		"parameters": {
 			"tableName": {
 				"type": "string",
-				"defaultValue": "blob01"
+				"defaultValue": "blob-01"
 			}
 		},
 		"folder": {
