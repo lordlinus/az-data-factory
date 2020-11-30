@@ -76,50 +76,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DataSet_01_Blob_Excel_Files')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "RawDataBlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"rawFolderName": {
-						"type": "string",
-						"defaultValue": "dataset-01"
-					},
-					"workSheet": {
-						"type": "string",
-						"defaultValue": "Sheet1"
-					}
-				},
-				"folder": {
-					"name": "Source"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": {
-						"value": "@dataset().workSheet",
-						"type": "Expression"
-					},
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"container": {
-							"value": "@dataset().rawFolderName",
-							"type": "Expression"
-						}
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/RawDataBlobStorage')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/AzureSynapseAnalyticsTable')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -153,7 +109,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DataSet_01_Blob_Excel_Files_copy1')]",
+			"name": "[concat(parameters('factoryName'), '/Blob_Excel_Files')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -227,19 +183,23 @@
 								"type": "SqlDWSink",
 								"allowPolyBase": true,
 								"polyBaseSettings": {
-									"rejectValue": 0,
+									"rejectValue": 100,
 									"rejectType": "value",
 									"useTypeDefault": true
 								},
 								"tableOption": "autoCreate"
 							},
-							"enableStaging": false
+							"enableStaging": false,
+							"enableSkipIncompatibleRow": true
 						},
 						"inputs": [
 							{
-								"referenceName": "DataSet_01_Blob_Excel_Files",
+								"referenceName": "Blob_Excel_Files",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"rawFolderName": "dataset-01",
+									"workSheet": "Sheet1"
+								}
 							}
 						],
 						"outputs": [
@@ -259,7 +219,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DataSet_01_Blob_Excel_Files')]",
+				"[concat(variables('factoryId'), '/datasets/Blob_Excel_Files')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSynapseAnalyticsTable')]"
 			]
 		},
