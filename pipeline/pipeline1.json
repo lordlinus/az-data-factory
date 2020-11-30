@@ -66,7 +66,14 @@
 			{
 				"name": "Convert_To_Parquet",
 				"type": "Copy",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Blob_Synapse_Copy_Activity",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "7.00:00:00",
 					"retry": 0,
@@ -166,7 +173,7 @@
 				"type": "Delete",
 				"dependsOn": [
 					{
-						"activity": "Blob_Synapse_Copy_Activity",
+						"activity": "Convert_To_Parquet",
 						"dependencyConditions": [
 							"Succeeded"
 						]
