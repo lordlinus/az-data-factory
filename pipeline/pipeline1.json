@@ -16,11 +16,11 @@
 				"userProperties": [
 					{
 						"name": "Source",
-						"value": "raw/dataset-01/"
+						"value": "dataset-01//"
 					},
 					{
 						"name": "Destination",
-						"value": "table01"
+						"value": "dbo.raw_dataset_01"
 					}
 				],
 				"typeProperties": {
