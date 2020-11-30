@@ -5,6 +5,12 @@
 			"referenceName": "AzureSynapseAnalytics1",
 			"type": "LinkedServiceReference"
 		},
+		"parameters": {
+			"tableName": {
+				"type": "string",
+				"defaultValue": "blob-01"
+			}
+		},
 		"folder": {
 			"name": "Sink"
 		},
@@ -14,7 +20,7 @@
 		"typeProperties": {
 			"schema": "dbo",
 			"table": {
-				"value": "@concat('dataset-',pipeline().parameters.tableName)",
+				"value": "@concat('dataset-',dataset().parameters.tableName)",
 				"type": "Expression"
 			}
 		}
