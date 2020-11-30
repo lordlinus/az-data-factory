@@ -27,7 +27,7 @@
 					"source": {
 						"type": "ExcelSource",
 						"storeSettings": {
-							"type": "AzureBlobFSReadSettings",
+							"type": "AzureBlobStorageReadSettings",
 							"recursive": true,
 							"wildcardFileName": "*"
 						}
@@ -60,7 +60,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "DataSet_01_Excel_Files",
+						"referenceName": "DataSet_01_Blob_Excel_Files",
 						"type": "DatasetReference"
 					}
 				],
