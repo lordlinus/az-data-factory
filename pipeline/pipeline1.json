@@ -149,7 +149,11 @@
 							"workSheet": "Sheet1"
 						}
 					},
-					"fieldList": [],
+					"fieldList": [
+						"itemName",
+						"itemType",
+						"lastModified"
+					],
 					"storeSettings": {
 						"type": "AzureBlobStorageReadSettings"
 					}
