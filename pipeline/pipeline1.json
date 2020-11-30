@@ -15,12 +15,16 @@
 				},
 				"userProperties": [
 					{
+						"name": "tableName",
+						"value": "blob01"
+					},
+					{
 						"name": "Source",
 						"value": "dataset-01//"
 					},
 					{
 						"name": "Destination",
-						"value": "dbo.raw_dataset_01"
+						"value": "dbo.@{concat('dataset-','pipeline().parameters.tableName')}"
 					}
 				],
 				"typeProperties": {
@@ -53,7 +57,10 @@
 				"outputs": [
 					{
 						"referenceName": "AzureSynapseAnalyticsTable1",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"tableName": "blob01"
+						}
 					}
 				]
 			}
