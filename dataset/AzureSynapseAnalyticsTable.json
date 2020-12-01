@@ -8,7 +8,7 @@
 		"parameters": {
 			"tableName": {
 				"type": "string",
-				"defaultValue": "tbl-dataset-01"
+				"defaultValue": "TblDataset01"
 			}
 		},
 		"folder": {
@@ -20,7 +20,7 @@
 		"typeProperties": {
 			"schema": "dbo",
 			"table": {
-				"value": "@concat('raw-',dataset().tableName)",
+				"value": "@concat('raw',dataset().tableName)",
 				"type": "Expression"
 			}
 		}
