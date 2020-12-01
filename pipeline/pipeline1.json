@@ -27,7 +27,7 @@
 					},
 					{
 						"name": "Destination",
-						"value": "dbo.@{concat('raw-','tbl-dataset-01')}"
+						"value": "dbo.@{concat('raw','tbl-dataset-01')}"
 					}
 				],
 				"typeProperties": {
@@ -172,7 +172,7 @@
 						"referenceName": "AzureSynapseAnalyticsTable",
 						"type": "DatasetReference",
 						"parameters": {
-							"tableName": "tbl-dataset-01"
+							"tableName": "TblDataset01"
 						}
 					}
 				]
@@ -400,7 +400,8 @@
 						"lastModified"
 					],
 					"storeSettings": {
-						"type": "AzureBlobStorageReadSettings"
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true
 					}
 				}
 			},
