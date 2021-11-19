@@ -1,0 +1,7 @@
+{
+	"name": "ssattdlz01devsqlserver001",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/7c1d967f-37f1-4047-bef7-05af9aa80fe2/resourceGroups/ssattdlz01-dev-metadata/providers/Microsoft.Sql/servers/ssattdlz01-dev-sqlserver001",
+		"groupId": "sqlServer"
+	}
+}

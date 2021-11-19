@@ -1,0 +1,9 @@
+{
+	"name": "ssattdlz01-dev-integration-datafactory001",
+	"location": "southeastasia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "ce7a0106-14ff-4901-90c3-c387ef185bfc",
+		"tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+	}
+}

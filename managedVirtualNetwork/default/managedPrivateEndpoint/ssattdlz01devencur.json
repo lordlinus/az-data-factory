@@ -1,0 +1,7 @@
+{
+	"name": "ssattdlz01devencur",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/7c1d967f-37f1-4047-bef7-05af9aa80fe2/resourceGroups/ssattdlz01-dev-storage/providers/Microsoft.Storage/storageAccounts/ssattdlz01devencur",
+		"groupId": "dfs"
+	}
+}
