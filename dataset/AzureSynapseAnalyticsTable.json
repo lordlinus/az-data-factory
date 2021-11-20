@@ -1,10 +1,6 @@
 {
 	"name": "AzureSynapseAnalyticsTable",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "AzureSynapseAnalytics1",
-			"type": "LinkedServiceReference"
-		},
 		"parameters": {
 			"tableName": {
 				"type": "string",

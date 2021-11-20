@@ -1,10 +1,6 @@
 {
 	"name": "Store_as_Parquet",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "AzureDataLakeStorageGen2",
-			"type": "LinkedServiceReference"
-		},
 		"folder": {
 			"name": "Sink"
 		},

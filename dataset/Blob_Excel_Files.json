@@ -1,10 +1,6 @@
 {
 	"name": "Blob_Excel_Files",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "RawDataBlobStorage",
-			"type": "LinkedServiceReference"
-		},
 		"parameters": {
 			"rawFolderName": {
 				"type": "string",
