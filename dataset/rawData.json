@@ -1,12 +1,12 @@
 {
-	"name": "DelimitedText1",
+	"name": "rawData",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "AzureDataLakeStorageDefault",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "bronze"
+			"name": "raw"
 		},
 		"annotations": [],
 		"type": "DelimitedText",

@@ -6,7 +6,7 @@
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "raw"
+			"name": "OnPrem"
 		},
 		"annotations": [],
 		"type": "Binary",
