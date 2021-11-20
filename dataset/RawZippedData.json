@@ -15,9 +15,6 @@
 				"type": "AzureBlobFSLocation",
 				"fileName": "archive.zip",
 				"fileSystem": "raw"
-			},
-			"compression": {
-				"type": "ZipDeflate"
 			}
 		}
 	}
