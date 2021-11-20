@@ -1,0 +1,24 @@
+{
+	"name": "RawZippedData",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorageDefault",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "raw"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "archive.zip",
+				"fileSystem": "raw"
+			},
+			"compression": {
+				"type": "ZipDeflate"
+			}
+		}
+	}
+}

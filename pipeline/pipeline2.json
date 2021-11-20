@@ -32,28 +32,8 @@
 							"type": "ParquetWriteSettings"
 						}
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "Store_as_Parquet",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "Store_as_Parquet",
-						"type": "DatasetReference"
-					}
-				]
+					"enableStaging": false
+				}
 			},
 			{
 				"name": "Notebook1",

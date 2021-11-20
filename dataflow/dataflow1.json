@@ -5,24 +5,16 @@
 		"typeProperties": {
 			"sources": [
 				{
-					"dataset": {
-						"referenceName": "Blob_Excel_Files",
-						"type": "DatasetReference"
-					},
 					"name": "source1"
 				}
 			],
 			"sinks": [
 				{
-					"dataset": {
-						"referenceName": "AzureSynapseAnalyticsTable",
-						"type": "DatasetReference"
-					},
 					"name": "sink1"
 				}
 			],
 			"transformations": [],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tmoveFiles: ['','processed/']) ~> source1\nsource1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tstaged: true,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tmoveFiles: ['','processed/']) ~> source1\nsource1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
 		}
 	}
 }
