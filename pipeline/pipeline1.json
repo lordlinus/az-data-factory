@@ -35,7 +35,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "RawZippedData",
+						"referenceName": "rawData",
 						"type": "DatasetReference"
 					}
 				],
@@ -73,7 +73,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "RawZippedData",
+						"referenceName": "rawData",
 						"type": "DatasetReference"
 					}
 				]
