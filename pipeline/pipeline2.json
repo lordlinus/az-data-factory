@@ -84,7 +84,7 @@
 				}
 			},
 			{
-				"name": "Data flow1",
+				"name": "bronze_to_silver",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
@@ -112,6 +112,33 @@
 						"type": "IntegrationRuntimeReference"
 					},
 					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "ML_Training",
+				"type": "DatabricksNotebook",
+				"dependsOn": [
+					{
+						"activity": "bronze_to_silver",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Users/ssattiraju@microsoft.com/Financial Fraud Detection using Decision Tree Machine Learning Models"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricks1",
+					"type": "LinkedServiceReference"
 				}
 			}
 		],
