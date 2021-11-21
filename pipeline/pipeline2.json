@@ -81,7 +81,7 @@
 		"parameters": {
 			"input": {
 				"type": "string",
-				"defaultValue": "https://ssattirajudemorgstg.blob.core.windows.net/raw/PS_20174392719_1491204439457_log.parquet"
+				"defaultValue": "https://ssattirajudemorgstg.blob.core.windows.net/raw/archive.zip/PS_20174392719_1491204439457_log.csv"
 			}
 		},
 		"folder": {
