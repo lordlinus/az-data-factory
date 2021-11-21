@@ -51,7 +51,7 @@
 				]
 			},
 			{
-				"name": "Notebook1",
+				"name": "convert_to_bronze",
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
