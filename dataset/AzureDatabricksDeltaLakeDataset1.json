@@ -8,8 +8,8 @@
 		"annotations": [],
 		"type": "AzureDatabricksDeltaLakeDataset",
 		"typeProperties": {
-			"database": "default",
-			"table": "kaggleData"
+			"database": "delta",
+			"table": "kaggledata"
 		},
 		"schema": []
 	}
