@@ -70,7 +70,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Users/ssattiraju@microsoft.com/csv_to_delta",
+					"notebookPath": "/Users/ssattiraju@microsoft.com/convert_to_delta",
 					"baseParameters": {
 						"input": {
 							"value": "@pipeline().parameters.input",
