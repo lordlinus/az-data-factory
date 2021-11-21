@@ -1,0 +1,142 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "ssattiraju-adf-01"
+		},
+		"AzureDataLakeStorageDefault_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AzureDataLakeStorageDefault'"
+		},
+		"AzureDatabricks1_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks1'"
+		},
+		"AzureDatabricksDeltaLake1_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'AzureDatabricksDeltaLake1'"
+		},
+		"AzureDataLakeStorageDefault_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://ssattirajudemorgstg.dfs.core.windows.net/"
+		},
+		"triggerOnFileUploadDataSet-01_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/7c1d967f-37f1-4047-bef7-05af9aa80fe2/resourceGroups/genting-rg/providers/Microsoft.Storage/storageAccounts/rawdatablobstg01"
+		},
+		"ssattdlz01devencur_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/7c1d967f-37f1-4047-bef7-05af9aa80fe2/resourceGroups/ssattdlz01-dev-storage/providers/Microsoft.Storage/storageAccounts/ssattdlz01devencur"
+		},
+		"ssattdlz01devencur_properties_groupId": {
+			"type": "string",
+			"defaultValue": "dfs"
+		},
+		"ssattdlz01devraw_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/7c1d967f-37f1-4047-bef7-05af9aa80fe2/resourceGroups/ssattdlz01-dev-storage/providers/Microsoft.Storage/storageAccounts/ssattdlz01devraw"
+		},
+		"ssattdlz01devraw_properties_groupId": {
+			"type": "string",
+			"defaultValue": "dfs"
+		},
+		"ssattdlz01devsqlserver001_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/7c1d967f-37f1-4047-bef7-05af9aa80fe2/resourceGroups/ssattdlz01-dev-metadata/providers/Microsoft.Sql/servers/ssattdlz01-dev-sqlserver001"
+		},
+		"ssattdlz01devsqlserver001_properties_groupId": {
+			"type": "string",
+			"defaultValue": "sqlServer"
+		},
+		"ssattdlz01devvault001_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/7c1d967f-37f1-4047-bef7-05af9aa80fe2/resourceGroups/ssattdlz01-dev-metadata/providers/Microsoft.KeyVault/vaults/ssattdlz01-dev-vault001"
+		},
+		"ssattdlz01devvault001_properties_groupId": {
+			"type": "string",
+			"defaultValue": "vault"
+		},
+		"ssattdlz01devvault001_properties_fqdns": {
+			"type": "array",
+			"defaultValue": [
+				"ssattdlz01-dev-vault001.vaultcore.azure.net"
+			]
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "ssattiraju-adf-01_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AzureDataLakeStorageDefault_accountKey": {
+						"value": "[parameters('AzureDataLakeStorageDefault_accountKey')]"
+					},
+					"AzureDatabricks1_accessToken": {
+						"value": "[parameters('AzureDatabricks1_accessToken')]"
+					},
+					"AzureDatabricksDeltaLake1_accessToken": {
+						"value": "[parameters('AzureDatabricksDeltaLake1_accessToken')]"
+					},
+					"AzureDataLakeStorageDefault_properties_typeProperties_url": {
+						"value": "[parameters('AzureDataLakeStorageDefault_properties_typeProperties_url')]"
+					},
+					"ssattdlz01devencur_properties_privateLinkResourceId": {
+						"value": "[parameters('ssattdlz01devencur_properties_privateLinkResourceId')]"
+					},
+					"ssattdlz01devencur_properties_groupId": {
+						"value": "[parameters('ssattdlz01devencur_properties_groupId')]"
+					},
+					"ssattdlz01devraw_properties_privateLinkResourceId": {
+						"value": "[parameters('ssattdlz01devraw_properties_privateLinkResourceId')]"
+					},
+					"ssattdlz01devraw_properties_groupId": {
+						"value": "[parameters('ssattdlz01devraw_properties_groupId')]"
+					},
+					"ssattdlz01devsqlserver001_properties_privateLinkResourceId": {
+						"value": "[parameters('ssattdlz01devsqlserver001_properties_privateLinkResourceId')]"
+					},
+					"ssattdlz01devsqlserver001_properties_groupId": {
+						"value": "[parameters('ssattdlz01devsqlserver001_properties_groupId')]"
+					},
+					"ssattdlz01devvault001_properties_privateLinkResourceId": {
+						"value": "[parameters('ssattdlz01devvault001_properties_privateLinkResourceId')]"
+					},
+					"ssattdlz01devvault001_properties_groupId": {
+						"value": "[parameters('ssattdlz01devvault001_properties_groupId')]"
+					},
+					"ssattdlz01devvault001_properties_fqdns": {
+						"value": "[parameters('ssattdlz01devvault001_properties_fqdns')]"
+					},
+					"triggerOnFileUploadDataSet-01_properties_typeProperties_scope": {
+						"value": "[parameters('triggerOnFileUploadDataSet-01_properties_typeProperties_scope')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

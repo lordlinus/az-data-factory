@@ -1,0 +1,53 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "ssattiraju-adf-01"
+		},
+		"AzureDataLakeStorageDefault_accountKey": {
+			"value": ""
+		},
+		"AzureDatabricks1_accessToken": {
+			"value": ""
+		},
+		"AzureDatabricksDeltaLake1_accessToken": {
+			"value": ""
+		},
+		"AzureDataLakeStorageDefault_properties_typeProperties_url": {
+			"value": "https://ssattirajudemorgstg.dfs.core.windows.net/"
+		},
+		"triggerOnFileUploadDataSet-01_properties_typeProperties_scope": {
+			"value": "/subscriptions/7c1d967f-37f1-4047-bef7-05af9aa80fe2/resourceGroups/genting-rg/providers/Microsoft.Storage/storageAccounts/rawdatablobstg01"
+		},
+		"ssattdlz01devencur_properties_privateLinkResourceId": {
+			"value": "/subscriptions/7c1d967f-37f1-4047-bef7-05af9aa80fe2/resourceGroups/ssattdlz01-dev-storage/providers/Microsoft.Storage/storageAccounts/ssattdlz01devencur"
+		},
+		"ssattdlz01devencur_properties_groupId": {
+			"value": "dfs"
+		},
+		"ssattdlz01devraw_properties_privateLinkResourceId": {
+			"value": "/subscriptions/7c1d967f-37f1-4047-bef7-05af9aa80fe2/resourceGroups/ssattdlz01-dev-storage/providers/Microsoft.Storage/storageAccounts/ssattdlz01devraw"
+		},
+		"ssattdlz01devraw_properties_groupId": {
+			"value": "dfs"
+		},
+		"ssattdlz01devsqlserver001_properties_privateLinkResourceId": {
+			"value": "/subscriptions/7c1d967f-37f1-4047-bef7-05af9aa80fe2/resourceGroups/ssattdlz01-dev-metadata/providers/Microsoft.Sql/servers/ssattdlz01-dev-sqlserver001"
+		},
+		"ssattdlz01devsqlserver001_properties_groupId": {
+			"value": "sqlServer"
+		},
+		"ssattdlz01devvault001_properties_privateLinkResourceId": {
+			"value": "/subscriptions/7c1d967f-37f1-4047-bef7-05af9aa80fe2/resourceGroups/ssattdlz01-dev-metadata/providers/Microsoft.KeyVault/vaults/ssattdlz01-dev-vault001"
+		},
+		"ssattdlz01devvault001_properties_groupId": {
+			"value": "vault"
+		},
+		"ssattdlz01devvault001_properties_fqdns": {
+			"value": [
+				"ssattdlz01-dev-vault001.vaultcore.azure.net"
+			]
+		}
+	}
+}
