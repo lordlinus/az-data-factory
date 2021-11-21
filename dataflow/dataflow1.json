@@ -18,7 +18,7 @@
 					"name": "Aggregate1"
 				}
 			],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'delta',\n\tfileSystem: 'bronze',\n\tfolderPath: 'archive.zip') ~> source1\nsource1 aggregate() ~> Aggregate1"
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'delta',\n\tfileSystem: 'bronze',\n\tfolderPath: 'archive.zip') ~> source1\nsource1 aggregate(groupBy(payment = ERROR_FUNCTION('')),\n\tpayment_agg = approxDistinctCount('{payment}')) ~> Aggregate1"
 		}
 	}
 }
