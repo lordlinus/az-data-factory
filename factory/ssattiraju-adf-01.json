@@ -1,0 +1,9 @@
+{
+	"name": "ssattiraju-adf-01",
+	"location": "southeastasia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "190d6ed6-b672-438f-a34e-94d5dcd8c64f",
+		"tenantId": "72f988bf-86f1-41af-91ab-2d7cd011db47"
+	}
+}
