@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Blob_Synapse_Copy_Activity",
+				"name": "Copy OnPrem to Raw",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -13,394 +13,41 @@
 					"secureOutput": false,
 					"secureInput": false
 				},
-				"userProperties": [
-					{
-						"name": "Source",
-						"value": "@{'dataset-01'}//"
-					},
-					{
-						"name": "Destination",
-						"value": "dbo.@{concat('raw','tbl-dataset-01')}"
-					}
-				],
+				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "ExcelSource",
+						"type": "BinarySource",
 						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"wildcardFileName": "*"
-						}
-					},
-					"sink": {
-						"type": "SqlDWSink",
-						"allowPolyBase": true,
-						"polyBaseSettings": {
-							"rejectValue": 100,
-							"rejectType": "value",
-							"useTypeDefault": true
-						},
-						"tableOption": "autoCreate"
-					},
-					"enableStaging": false,
-					"enableSkipIncompatibleRow": true,
-					"translator": {
-						"type": "TabularTranslator",
-						"mappings": [
-							{
-								"source": {
-									"name": "pii_name",
-									"type": "String"
-								},
-								"sink": {
-									"name": "pii_name",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "pii_email",
-									"type": "String"
-								},
-								"sink": {
-									"name": "pii_email",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "pii_mobile",
-									"type": "String"
-								},
-								"sink": {
-									"name": "pii_mobile",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "attribute1",
-									"type": "String"
-								},
-								"sink": {
-									"name": "attribute1",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "attribute2",
-									"type": "String"
-								},
-								"sink": {
-									"name": "attribute2",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "attribute3",
-									"type": "String"
-								},
-								"sink": {
-									"name": "attribute3",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "attribute4",
-									"type": "String"
-								},
-								"sink": {
-									"name": "attribute4",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "attribute5",
-									"type": "String"
-								},
-								"sink": {
-									"name": "attribute5",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "attribute6",
-									"type": "String"
-								},
-								"sink": {
-									"name": "attribute6",
-									"type": "String"
-								}
-							},
-							{
-								"source": {
-									"name": "attribute7",
-									"type": "String"
-								},
-								"sink": {
-									"name": "attribute7",
-									"type": "String"
-								}
-							}
-						]
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "Blob_Excel_Files",
-						"type": "DatasetReference",
-						"parameters": {
-							"rawFolderName": "dataset-01",
-							"workSheet": "Sheet1"
-						}
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "AzureSynapseAnalyticsTable",
-						"type": "DatasetReference",
-						"parameters": {
-							"tableName": "TblDataset01"
-						}
-					}
-				]
-			},
-			{
-				"name": "Convert_To_Parquet",
-				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Blob_Synapse_Copy_Activity",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [
-					{
-						"name": "Source",
-						"value": "@{'dataset-01'}//"
-					},
-					{
-						"name": "Destination",
-						"value": "processed//"
-					}
-				],
-				"typeProperties": {
-					"source": {
-						"type": "ExcelSource",
-						"storeSettings": {
-							"type": "AzureBlobStorageReadSettings",
-							"recursive": true,
-							"wildcardFileName": "*"
-						}
-					},
-					"sink": {
-						"type": "ParquetSink",
-						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings",
-							"copyBehavior": "MergeFiles"
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true
 						},
 						"formatSettings": {
-							"type": "ParquetWriteSettings"
+							"type": "BinaryReadSettings",
+							"compressionProperties": {
+								"type": "ZipDeflateReadSettings"
+							}
 						}
 					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"mappings": [
-							{
-								"source": {
-									"name": "pii_name",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "pii_name",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "pii_email",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "pii_email",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "pii_mobile",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "pii_mobile",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "attribute1",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "attribute1",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "attribute2",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "attribute2",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "attribute3",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "attribute3",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "attribute4",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "attribute4",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "attribute5",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "attribute5",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "attribute6",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "attribute6",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							},
-							{
-								"source": {
-									"name": "attribute7",
-									"type": "String",
-									"physicalType": "String"
-								},
-								"sink": {
-									"name": "attribute7",
-									"type": "String",
-									"physicalType": "UTF8"
-								}
-							}
-						],
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
+					"sink": {
+						"type": "BinarySink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
 						}
-					}
+					},
+					"enableStaging": false
 				},
 				"inputs": [
 					{
-						"referenceName": "Blob_Excel_Files",
-						"type": "DatasetReference",
-						"parameters": {
-							"rawFolderName": "dataset-01",
-							"workSheet": "Sheet1"
-						}
+						"referenceName": "OnPremCompressedData",
+						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "Store_as_Parquet",
+						"referenceName": "rawDataBinary",
 						"type": "DatasetReference"
 					}
 				]
-			},
-			{
-				"name": "Delete1",
-				"type": "Delete",
-				"dependsOn": [
-					{
-						"activity": "Convert_To_Parquet",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataset": {
-						"referenceName": "Blob_Excel_Files",
-						"type": "DatasetReference",
-						"parameters": {
-							"rawFolderName": "dataset-01",
-							"workSheet": "Sheet1"
-						}
-					},
-					"enableLogging": false,
-					"storeSettings": {
-						"type": "AzureBlobStorageReadSettings",
-						"recursive": true,
-						"wildcardFileName": "*.xlsx"
-					}
-				}
 			}
 		],
 		"folder": {

@@ -1,0 +1,68 @@
+{
+	"name": "rawDataParquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorageDefault",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "raw"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "parquet",
+				"fileSystem": "raw"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "step",
+				"type": "INT32"
+			},
+			{
+				"name": "type",
+				"type": "UTF8"
+			},
+			{
+				"name": "amount",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "nameOrig",
+				"type": "UTF8"
+			},
+			{
+				"name": "oldbalanceOrg",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "newbalanceOrig",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "nameDest",
+				"type": "UTF8"
+			},
+			{
+				"name": "oldbalanceDest",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "newbalanceDest",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "isFraud",
+				"type": "INT32"
+			},
+			{
+				"name": "isFlaggedFraud",
+				"type": "INT32"
+			}
+		]
+	}
+}

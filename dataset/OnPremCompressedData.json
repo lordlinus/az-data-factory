@@ -1,0 +1,25 @@
+{
+	"name": "OnPremCompressedData",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorageDefault",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "OnPrem"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "archive.zip",
+				"fileSystem": "onprem"
+			},
+			"compression": {
+				"type": "ZipDeflate",
+				"level": "Optimal"
+			}
+		}
+	}
+}

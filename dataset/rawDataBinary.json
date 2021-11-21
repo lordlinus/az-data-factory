@@ -1,0 +1,20 @@
+{
+	"name": "rawDataBinary",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorageDefault",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "raw"
+		},
+		"annotations": [],
+		"type": "Binary",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileSystem": "raw"
+			}
+		}
+	}
+}

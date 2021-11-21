@@ -1,20 +1,16 @@
 {
-	"name": "Store_as_Parquet",
+	"name": "SilverDataset",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "AzureDataLakeStorageGen2",
+			"referenceName": "AzureDataLakeStorageDefault",
 			"type": "LinkedServiceReference"
-		},
-		"folder": {
-			"name": "Sink"
 		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"folderPath": "parquet",
-				"fileSystem": "processed"
+				"fileSystem": "silver"
 			},
 			"compressionCodec": "snappy"
 		},
