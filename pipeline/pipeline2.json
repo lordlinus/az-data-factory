@@ -115,7 +115,7 @@
 				}
 			},
 			{
-				"name": "Notebook1",
+				"name": "ML_Pipeline",
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
