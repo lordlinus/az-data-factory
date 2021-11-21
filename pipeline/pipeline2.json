@@ -134,7 +134,14 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"notebookPath": "/Users/ssattiraju@microsoft.com/Financial Fraud Detection using Decision Tree Machine Learning Models"
+					"notebookPath": "/Users/ssattiraju@microsoft.com/Financial Fraud Detection using Decision Tree Machine Learning Models",
+					"libraries": [
+						{
+							"pypi": {
+								"package": "mlflow"
+							}
+						}
+					]
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureDatabricks1",
