@@ -84,7 +84,7 @@
 				}
 			},
 			{
-				"name": "Data flow1",
+				"name": "Bronze to Silver",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
@@ -119,7 +119,7 @@
 				"type": "DatabricksNotebook",
 				"dependsOn": [
 					{
-						"activity": "Data flow1",
+						"activity": "Bronze to Silver",
 						"dependencyConditions": [
 							"Succeeded"
 						]
