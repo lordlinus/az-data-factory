@@ -13,8 +13,12 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'delta',\n\tfileSystem: 'bronze',\n\tfolderPath: 'archive.zip') ~> source1"
+			"transformations": [
+				{
+					"name": "Aggregate1"
+				}
+			],
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'delta',\n\tfileSystem: 'bronze',\n\tfolderPath: 'archive.zip') ~> source1\nsource1 aggregate() ~> Aggregate1"
 		}
 	}
 }
