@@ -5,6 +5,9 @@
 			"referenceName": "AzureDataLakeStorageDefault",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "raw"
+		},
 		"annotations": [],
 		"type": "Parquet",
 		"typeProperties": {
