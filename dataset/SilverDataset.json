@@ -14,6 +14,15 @@
 			},
 			"compressionCodec": "snappy"
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "type",
+				"type": "UTF8"
+			},
+			{
+				"name": "payment_agg",
+				"type": "INT64"
+			}
+		]
 	}
 }
