@@ -1,0 +1,27 @@
+{
+	"name": "Hive1",
+	"properties": {
+		"annotations": [],
+		"type": "Hive",
+		"typeProperties": {
+			"host": "13.76.133.55",
+			"port": 10000,
+			"serverType": "HiveServer2",
+			"thriftTransportProtocol": "HTTP",
+			"authenticationType": "Username",
+			"serviceDiscoveryMode": false,
+			"useNativeQuery": false,
+			"username": "hive",
+			"password": false,
+			"enableSsl": false,
+			"storageReference": {
+				"referenceName": "AzureDataLakeStorageDefault",
+				"type": "LinkedServiceReference"
+			}
+		},
+		"connectVia": {
+			"referenceName": "integrationRuntime1",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
