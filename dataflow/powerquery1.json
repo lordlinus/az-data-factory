@@ -3,17 +3,8 @@
 	"properties": {
 		"type": "WranglingDataFlow",
 		"typeProperties": {
-			"sources": [
-				{
-					"name": "rawDataParquet",
-					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'parquet') ~>  rawDataParquet",
-					"dataset": {
-						"referenceName": "rawDataParquet",
-						"type": "DatasetReference"
-					}
-				}
-			],
-			"script": "section Section1;\r\nshared rawDataParquet = let\r\n  AdfDoc = AzureStorage.DataLakeContents(\"https://ssattirajudemorgstg.dfs.core.windows.net/raw/parquet/PS_20174392719_1491204439457_log.parquet\"),\r\n  Parquet = Parquet.Document(AdfDoc)\r\nin\r\n  Parquet;\r\nshared UserQuery = let\r\n  Source = rawDataParquet,\r\n  #\"Promoted headers\" = Table.PromoteHeaders(Source, [PromoteAllScalars = true])\r\nin\r\n  #\"Promoted headers\";\r\n",
+			"sources": [],
+			"script": "section Section1;\r\nshared rawDataParquet = let\r\n  AdfDoc = AzureStorage.DataLakeContents(\"https://ssattirajudemorgstg.dfs.core.windows.net/raw/parquet/PS_20174392719_1491204439457_log.parquet\"),\r\n  Parquet = Parquet.Document(AdfDoc)\r\nin\r\n  Parquet;\r\nshared UserQuery = let\r\n  Source = rawDataParquet,\r\n  #\"Removed columns\" = Table.RemoveColumns(Source, {\"Prop_0\"})\r\nin\r\n  #\"Removed columns\";\r\n",
 			"documentLocale": "en-us"
 		}
 	}
