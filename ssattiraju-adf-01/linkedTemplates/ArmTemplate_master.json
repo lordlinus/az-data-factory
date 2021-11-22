@@ -65,6 +65,14 @@
 				"ssattdlz01-dev-vault001.vaultcore.azure.net"
 			]
 		},
+		"Hive1_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "13.76.133.55"
+		},
+		"Hive1_properties_typeProperties_username": {
+			"type": "string",
+			"defaultValue": "hive"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -131,12 +139,38 @@
 					"ssattdlz01devvault001_properties_fqdns": {
 						"value": "[parameters('ssattdlz01devvault001_properties_fqdns')]"
 					},
+					"Hive1_properties_typeProperties_host": {
+						"value": "[parameters('Hive1_properties_typeProperties_host')]"
+					},
+					"Hive1_properties_typeProperties_username": {
+						"value": "[parameters('Hive1_properties_typeProperties_username')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "ssattiraju-adf-01_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
 					"triggerOnFileUploadDataSet-01_properties_typeProperties_scope": {
 						"value": "[parameters('triggerOnFileUploadDataSet-01_properties_typeProperties_scope')]"
 					}
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'ssattiraju-adf-01_ArmTemplate_0')]"
+			]
 		}
 	]
 }

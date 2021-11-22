@@ -48,6 +48,12 @@
 			"value": [
 				"ssattdlz01-dev-vault001.vaultcore.azure.net"
 			]
+		},
+		"Hive1_properties_typeProperties_host": {
+			"value": "13.76.133.55"
+		},
+		"Hive1_properties_typeProperties_username": {
+			"value": "hive"
 		}
 	}
 }

@@ -64,6 +64,14 @@
 			"defaultValue": [
 				"ssattdlz01-dev-vault001.vaultcore.azure.net"
 			]
+		},
+		"Hive1_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "13.76.133.55"
+		},
+		"Hive1_properties_typeProperties_username": {
+			"type": "string",
+			"defaultValue": "hive"
 		}
 	},
 	"variables": {
@@ -255,6 +263,7 @@
 								"parameters": {},
 								"datasetParameters": {
 									"source1": {},
+									"source2": {},
 									"sink1": {}
 								}
 							},
@@ -299,6 +308,40 @@
 							"referenceName": "AzureDatabricks1",
 							"type": "LinkedServiceReference"
 						}
+					},
+					{
+						"name": "transform_data_notebook",
+						"type": "DatabricksNotebook",
+						"dependsOn": [
+							{
+								"activity": "bronze_to_silver",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"notebookPath": "/Users/ssattiraju@microsoft.com/data_transformation",
+							"libraries": [
+								{
+									"pypi": {
+										"package": "mlflow"
+									}
+								}
+							]
+						},
+						"linkedServiceName": {
+							"referenceName": "AzureDatabricks1",
+							"type": "LinkedServiceReference"
+						}
 					}
 				],
 				"policy": {
@@ -322,27 +365,6 @@
 				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricks1')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow1')]",
 				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureDatabricksDeltaLakeDataset1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDatabricksDeltaLake1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureDatabricksDeltaLakeDataset",
-				"typeProperties": {
-					"database": "delta",
-					"table": "kaggledata"
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricksDeltaLake1')]"
 			]
 		},
 		{
@@ -393,7 +415,16 @@
 					},
 					"compressionCodec": "snappy"
 				},
-				"schema": []
+				"schema": [
+					{
+						"name": "type",
+						"type": "UTF8"
+					},
+					{
+						"name": "payment_agg",
+						"type": "INT64"
+					}
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorageDefault')]"
@@ -449,7 +480,41 @@
 					"escapeChar": "\\",
 					"quoteChar": "\""
 				},
-				"schema": []
+				"schema": [
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorageDefault')]"
@@ -605,7 +670,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Stopped",
+				"runtimeState": "Started",
 				"pipelines": [
 					{
 						"pipelineReference": {
@@ -689,6 +754,13 @@
 								"type": "LinkedServiceReference"
 							},
 							"name": "source1"
+						},
+						{
+							"dataset": {
+								"referenceName": "LookUpTable",
+								"type": "DatasetReference"
+							},
+							"name": "source2"
 						}
 					],
 					"sinks": [
@@ -703,14 +775,43 @@
 					"transformations": [
 						{
 							"name": "Aggregate1"
+						},
+						{
+							"name": "Join1"
 						}
 					],
-					"script": "source(output(\n\t\tstep as integer,\n\t\ttype as string,\n\t\tamount as double,\n\t\tnameOrig as string,\n\t\toldbalanceOrg as double,\n\t\tnewbalanceOrig as double,\n\t\tnameDest as string,\n\t\toldbalanceDest as double,\n\t\tnewbalanceDest as double,\n\t\tisFraud as integer,\n\t\tisFlaggedFraud as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tlimit: 100,\n\tignoreNoFilesFound: false,\n\tformat: 'delta',\n\tfileSystem: 'bronze',\n\tfolderPath: 'archive.zip') ~> source1\nsource1 aggregate(groupBy(type),\n\tpayment_agg = approxDistinctCount('{payment}')) ~> Aggregate1\nAggregate1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tsaveOrder: 1) ~> sink1"
+					"script": "source(output(\n\t\tstep as integer,\n\t\ttype as string,\n\t\tamount as double,\n\t\tnameOrig as string,\n\t\toldbalanceOrg as double,\n\t\tnewbalanceOrig as double,\n\t\tnameDest as string,\n\t\toldbalanceDest as double,\n\t\tnewbalanceDest as double,\n\t\tisFraud as integer,\n\t\tisFlaggedFraud as integer\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tlimit: 100,\n\tignoreNoFilesFound: false,\n\tformat: 'delta',\n\tfileSystem: 'bronze',\n\tfolderPath: 'archive.zip') ~> source1\nsource(output(\n\t\tColumn_1 as string,\n\t\tColumn_2 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> source2\nJoin1 aggregate(groupBy(type,\n\t\tstep),\n\tpayment_agg = approxDistinctCount('{payment}')) ~> Aggregate1\nsource1, source2 join(type == Column_1,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join1\nAggregate1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\ttype as string,\n\t\tpayment_agg as long\n\t),\n\tformat: 'parquet',\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\tsaveOrder: 1) ~> sink1"
 				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorageDefault')]",
+				"[concat(variables('factoryId'), '/datasets/LookUpTable')]",
 				"[concat(variables('factoryId'), '/datasets/SilverDataset')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/powerquery1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "WranglingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"name": "rawDataParquet",
+							"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'parquet') ~> rawDataParquet",
+							"dataset": {
+								"referenceName": "rawDataParquet",
+								"type": "DatasetReference"
+							}
+						}
+					],
+					"script": "section Section1;\r\nshared rawDataParquet = let\r\n  AdfDoc = AzureStorage.DataLakeContents(\"https://ssattirajudemorgstg.dfs.core.windows.net/raw/parquet/PS_20174392719_1491204439457_log.parquet\"),\r\n  Parquet = Parquet.Document(AdfDoc)\r\nin\r\n  Parquet;\r\nshared SilverDataset = let\r\n  AdfDoc = AzureStorage.DataLakeContents(\"https://ssattirajudemorgstg.dfs.core.windows.net/silver/part-00000-tid-1626034948910029285-3cb17354-6d2c-4fc3-899e-6996b45aa6cb-206-1-c000.snappy.parquet\"),\r\n  Parquet = Parquet.Document(AdfDoc)\r\nin\r\n  Parquet;\r\n",
+					"documentLocale": "en-us"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/rawDataParquet')]"
 			]
 		},
 		{
@@ -767,6 +868,74 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Hive1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "Hive",
+				"typeProperties": {
+					"host": "[parameters('Hive1_properties_typeProperties_host')]",
+					"port": 10000,
+					"serverType": "HiveServer2",
+					"thriftTransportProtocol": "HTTP",
+					"authenticationType": "Username",
+					"serviceDiscoveryMode": false,
+					"useNativeQuery": false,
+					"username": "[parameters('Hive1_properties_typeProperties_username')]",
+					"password": false,
+					"enableSsl": false,
+					"storageReference": {
+						"referenceName": "AzureDataLakeStorageDefault",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime1",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorageDefault')]",
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LookUpTable')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorageDefault",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "lookup_table.csv",
+						"folderPath": "lookup_data",
+						"fileSystem": "raw"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorageDefault')]"
 			]
 		}
 	]
