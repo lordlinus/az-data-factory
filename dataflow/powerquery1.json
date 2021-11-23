@@ -1,0 +1,20 @@
+{
+	"name": "powerquery1",
+	"properties": {
+		"type": "WranglingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "rawDataParquet",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'parquet') ~>  rawDataParquet",
+					"dataset": {
+						"referenceName": "rawDataParquet",
+						"type": "DatasetReference"
+					}
+				}
+			],
+			"script": "section Section1;\r\nshared rawDataParquet = let\r\n  AdfDoc = AzureStorage.DataLakeContents(\"https://ssattirajudemorgstg.dfs.core.windows.net/raw/parquet/PS_20174392719_1491204439457_log.parquet\"),\r\n  Parquet = Parquet.Document(AdfDoc),\r\n  #\"Promoted headers\" = Table.PromoteHeaders(Parquet, [PromoteAllScalars = true]),\r\n  #\"Filtered rows\" = Table.SelectRows(#\"Promoted headers\", each [type] = \"PAYMENT\")\r\nin\r\n  #\"Filtered rows\";\r\n",
+			"documentLocale": "en-us"
+		}
+	}
+}
