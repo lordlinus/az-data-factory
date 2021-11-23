@@ -1,0 +1,20 @@
+{
+	"name": "powerquery1",
+	"properties": {
+		"type": "WranglingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "rawDataCsv",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~>  rawDataCsv",
+					"dataset": {
+						"referenceName": "rawDataCsv",
+						"type": "DatasetReference"
+					}
+				}
+			],
+			"script": "section Section1;\r\nshared rawDataCsv = let\r\n  AdfDoc = AzureStorage.DataLakeContents(\"https://ssattirajudemorgstg.dfs.core.windows.net/raw/archive.zip/PS_20174392719_1491204439457_log.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  #\"Promoted headers\" = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  #\"Promoted headers\";\r\nshared UserQuery = let\r\n  Source = rawDataCsv,\r\n  #\"Removed other columns\" = Table.SelectColumns(Source, {\"step\", \"type\", \"amount\", \"nameOrig\"})\r\nin\r\n  #\"Removed other columns\";\r\n",
+			"documentLocale": "en-us"
+		}
+	}
+}
