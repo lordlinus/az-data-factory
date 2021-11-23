@@ -13,7 +13,7 @@
 					}
 				}
 			],
-			"script": "section Section1;\r\nshared rawDataParquet = let\r\n  AdfDoc = AzureStorage.DataLakeContents(\"https://ssattirajudemorgstg.dfs.core.windows.net/raw/parquet/PS_20174392719_1491204439457_log.parquet\"),\r\n  Parquet = Parquet.Document(AdfDoc),\r\n  #\"Promoted headers\" = Table.PromoteHeaders(Parquet, [PromoteAllScalars = true]),\r\n  #\"Filtered rows\" = Table.SelectRows(#\"Promoted headers\", each [type] = \"PAYMENT\")\r\nin\r\n  #\"Filtered rows\";\r\n",
+			"script": "section Section1;\r\nshared rawDataParquet = let\r\n  AdfDoc = AzureStorage.DataLakeContents(\"https://ssattirajudemorgstg.dfs.core.windows.net/raw/parquet/PS_20174392719_1491204439457_log.parquet\"),\r\n  Parquet = Parquet.Document(AdfDoc),\r\n  #\"Promoted headers\" = Table.PromoteHeaders(Parquet, [PromoteAllScalars = true]),\r\n  #\"Filtered rows\" = Table.SelectRows(#\"Promoted headers\", each [type] = \"PAYMENT\"),\r\n  #\"Reordered columns\" = Table.ReorderColumns(#\"Filtered rows\", {\"nameOrig\", \"step\", \"type\", \"amount\", \"oldbalanceOrg\", \"newbalanceOrig\", \"nameDest\", \"oldbalanceDest\", \"newbalanceDest\", \"isFraud\", \"isFlaggedFraud\"})\r\nin\r\n  #\"Reordered columns\";\r\n",
 			"documentLocale": "en-us"
 		}
 	}
