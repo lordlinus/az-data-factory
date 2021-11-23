@@ -23,6 +23,14 @@
 			"type": "string",
 			"defaultValue": "https://ssattirajudemorgstg.dfs.core.windows.net/"
 		},
+		"Hive1_properties_typeProperties_host": {
+			"type": "string",
+			"defaultValue": "13.76.133.55"
+		},
+		"Hive1_properties_typeProperties_username": {
+			"type": "string",
+			"defaultValue": "hive"
+		},
 		"triggerOnFileUploadDataSet-01_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/7c1d967f-37f1-4047-bef7-05af9aa80fe2/resourceGroups/genting-rg/providers/Microsoft.Storage/storageAccounts/rawdatablobstg01"
@@ -64,14 +72,6 @@
 			"defaultValue": [
 				"ssattdlz01-dev-vault001.vaultcore.azure.net"
 			]
-		},
-		"Hive1_properties_typeProperties_host": {
-			"type": "string",
-			"defaultValue": "13.76.133.55"
-		},
-		"Hive1_properties_typeProperties_username": {
-			"type": "string",
-			"defaultValue": "hive"
 		}
 	},
 	"variables": {
@@ -368,6 +368,110 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureDatabricksDeltaLakeDatasetSilver')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricksDeltaLake1",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "silver"
+				},
+				"annotations": [],
+				"type": "AzureDatabricksDeltaLakeDataset",
+				"typeProperties": {
+					"database": "delta",
+					"table": "kaggle_silver_data"
+				},
+				"schema": [
+					{
+						"name": "step",
+						"type": "integer"
+					},
+					{
+						"name": "type",
+						"type": "string"
+					},
+					{
+						"name": "amount",
+						"type": "double"
+					},
+					{
+						"name": "nameOrig",
+						"type": "string"
+					},
+					{
+						"name": "oldbalanceOrg",
+						"type": "double"
+					},
+					{
+						"name": "newbalanceOrig",
+						"type": "double"
+					},
+					{
+						"name": "nameDest",
+						"type": "string"
+					},
+					{
+						"name": "oldbalanceDest",
+						"type": "double"
+					},
+					{
+						"name": "newbalanceDest",
+						"type": "double"
+					},
+					{
+						"name": "isFraud",
+						"type": "integer"
+					},
+					{
+						"name": "isFlaggedFraud",
+						"type": "integer"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricksDeltaLake1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/LookUpTable')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorageDefault",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "lookup_table.csv",
+						"folderPath": "lookup_data",
+						"fileSystem": "raw"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorageDefault')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/OnPremCompressedData')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -405,6 +509,9 @@
 				"linkedServiceName": {
 					"referenceName": "AzureDataLakeStorageDefault",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "silver"
 				},
 				"annotations": [],
 				"type": "Parquet",
@@ -665,6 +772,39 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Hive1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "Hive",
+				"typeProperties": {
+					"host": "[parameters('Hive1_properties_typeProperties_host')]",
+					"port": 10000,
+					"serverType": "HiveServer2",
+					"thriftTransportProtocol": "HTTP",
+					"authenticationType": "Username",
+					"serviceDiscoveryMode": false,
+					"useNativeQuery": false,
+					"username": "[parameters('Hive1_properties_typeProperties_username')]",
+					"password": false,
+					"enableSsl": false,
+					"storageReference": {
+						"referenceName": "AzureDataLakeStorageDefault",
+						"type": "LinkedServiceReference"
+					}
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime1",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime1')]",
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorageDefault')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/triggerOnFileUploadDataSet-01')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
@@ -790,31 +930,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/powerquery1')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "WranglingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"name": "rawDataParquet",
-							"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false,\n\tformat: 'parquet') ~> rawDataParquet",
-							"dataset": {
-								"referenceName": "rawDataParquet",
-								"type": "DatasetReference"
-							}
-						}
-					],
-					"script": "section Section1;\r\nshared rawDataParquet = let\r\n  AdfDoc = AzureStorage.DataLakeContents(\"https://ssattirajudemorgstg.dfs.core.windows.net/raw/parquet/PS_20174392719_1491204439457_log.parquet\"),\r\n  Parquet = Parquet.Document(AdfDoc)\r\nin\r\n  Parquet;\r\nshared SilverDataset = let\r\n  AdfDoc = AzureStorage.DataLakeContents(\"https://ssattirajudemorgstg.dfs.core.windows.net/silver/part-00000-tid-1626034948910029285-3cb17354-6d2c-4fc3-899e-6996b45aa6cb-206-1-c000.snappy.parquet\"),\r\n  Parquet = Parquet.Document(AdfDoc)\r\nin\r\n  Parquet;\r\n",
-					"documentLocale": "en-us"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/rawDataParquet')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/default')]",
 			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
 			"apiVersion": "2018-06-01",
@@ -868,74 +983,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Hive1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "Hive",
-				"typeProperties": {
-					"host": "[parameters('Hive1_properties_typeProperties_host')]",
-					"port": 10000,
-					"serverType": "HiveServer2",
-					"thriftTransportProtocol": "HTTP",
-					"authenticationType": "Username",
-					"serviceDiscoveryMode": false,
-					"useNativeQuery": false,
-					"username": "[parameters('Hive1_properties_typeProperties_username')]",
-					"password": false,
-					"enableSsl": false,
-					"storageReference": {
-						"referenceName": "AzureDataLakeStorageDefault",
-						"type": "LinkedServiceReference"
-					}
-				},
-				"connectVia": {
-					"referenceName": "integrationRuntime1",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorageDefault')]",
-				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/LookUpTable')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStorageDefault",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "lookup_table.csv",
-						"folderPath": "lookup_data",
-						"fileSystem": "raw"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorageDefault')]"
 			]
 		}
 	]

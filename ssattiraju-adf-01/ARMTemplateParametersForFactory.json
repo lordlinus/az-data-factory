@@ -17,6 +17,12 @@
 		"AzureDataLakeStorageDefault_properties_typeProperties_url": {
 			"value": "https://ssattirajudemorgstg.dfs.core.windows.net/"
 		},
+		"Hive1_properties_typeProperties_host": {
+			"value": "13.76.133.55"
+		},
+		"Hive1_properties_typeProperties_username": {
+			"value": "hive"
+		},
 		"triggerOnFileUploadDataSet-01_properties_typeProperties_scope": {
 			"value": "/subscriptions/7c1d967f-37f1-4047-bef7-05af9aa80fe2/resourceGroups/genting-rg/providers/Microsoft.Storage/storageAccounts/rawdatablobstg01"
 		},
@@ -48,12 +54,6 @@
 			"value": [
 				"ssattdlz01-dev-vault001.vaultcore.azure.net"
 			]
-		},
-		"Hive1_properties_typeProperties_host": {
-			"value": "13.76.133.55"
-		},
-		"Hive1_properties_typeProperties_username": {
-			"value": "hive"
 		}
 	}
 }
