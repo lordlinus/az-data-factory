@@ -1058,7 +1058,7 @@
 							}
 						}
 					],
-					"script": "section Section1;\r\nshared rawDataCsv = let\r\n  AdfDoc = AzureStorage.DataLakeContents(\"https://ssattirajudemorgstg.dfs.core.windows.net/raw/archive.zip/PS_20174392719_1491204439457_log.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  #\"Promoted headers\" = Table.PromoteHeaders(Csv, [PromoteAllScalars = true]),\r\n  #\"Removed other columns\" = Table.SelectColumns(#\"Promoted headers\", {\"step\", \"type\", \"amount\", \"nameOrig\"})\r\nin\r\n  #\"Removed other columns\";\r\nshared UserQuery = let\r\n  Source = rawDataCsv\r\nin\r\n  Source;\r\n",
+					"script": "section Section1;\r\nshared rawDataCsv = let\r\n  AdfDoc = AzureStorage.DataLakeContents(\"https://ssattirajudemorgstg.dfs.core.windows.net/raw/archive.zip/PS_20174392719_1491204439457_log.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  #\"Promoted headers\" = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  #\"Promoted headers\";\r\nshared UserQuery = let\r\n  Source = rawDataCsv\r\nin\r\n  Source;\r\n",
 					"documentLocale": "en-us"
 				}
 			},
