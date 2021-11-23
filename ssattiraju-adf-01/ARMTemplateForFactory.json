@@ -498,6 +498,9 @@
 					"referenceName": "AzureDataLakeStorageDefault",
 					"type": "LinkedServiceReference"
 				},
+				"folder": {
+					"name": "reference"
+				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
@@ -1071,6 +1074,9 @@
 				"linkedServiceName": {
 					"referenceName": "AzureDataLakeStorageDefault",
 					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "gold"
 				},
 				"annotations": [],
 				"type": "Parquet",
