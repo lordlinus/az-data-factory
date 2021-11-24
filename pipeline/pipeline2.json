@@ -41,111 +41,111 @@
 						"mappings": [
 							{
 								"source": {
-									"type": "String",
-									"ordinal": 1
+									"name": "step",
+									"type": "String"
 								},
 								"sink": {
-									"name": "Columnundefined",
+									"name": "step",
 									"type": "String"
 								}
 							},
 							{
 								"source": {
-									"type": "String",
-									"ordinal": 2
+									"name": "type",
+									"type": "String"
 								},
 								"sink": {
-									"name": "Columnundefined",
+									"name": "type",
 									"type": "String"
 								}
 							},
 							{
 								"source": {
-									"type": "String",
-									"ordinal": 3
+									"name": "amount",
+									"type": "String"
 								},
 								"sink": {
-									"name": "Columnundefined",
+									"name": "amount",
 									"type": "String"
 								}
 							},
 							{
 								"source": {
-									"type": "String",
-									"ordinal": 4
+									"name": "nameOrig",
+									"type": "String"
 								},
 								"sink": {
-									"name": "Columnundefined",
+									"name": "nameOrig",
 									"type": "String"
 								}
 							},
 							{
 								"source": {
-									"type": "String",
-									"ordinal": 5
+									"name": "oldbalanceOrg",
+									"type": "String"
 								},
 								"sink": {
-									"name": "Columnundefined",
+									"name": "oldbalanceOrg",
 									"type": "String"
 								}
 							},
 							{
 								"source": {
-									"type": "String",
-									"ordinal": 6
+									"name": "newbalanceOrig",
+									"type": "String"
 								},
 								"sink": {
-									"name": "Columnundefined",
+									"name": "newbalanceOrig",
 									"type": "String"
 								}
 							},
 							{
 								"source": {
-									"type": "String",
-									"ordinal": 7
+									"name": "nameDest",
+									"type": "String"
 								},
 								"sink": {
-									"name": "Columnundefined",
+									"name": "nameDest",
 									"type": "String"
 								}
 							},
 							{
 								"source": {
-									"type": "String",
-									"ordinal": 8
+									"name": "oldbalanceDest",
+									"type": "String"
 								},
 								"sink": {
-									"name": "Columnundefined",
+									"name": "oldbalanceDest",
 									"type": "String"
 								}
 							},
 							{
 								"source": {
-									"type": "String",
-									"ordinal": 9
+									"name": "newbalanceDest",
+									"type": "String"
 								},
 								"sink": {
-									"name": "Columnundefined",
+									"name": "newbalanceDest",
 									"type": "String"
 								}
 							},
 							{
 								"source": {
-									"type": "String",
-									"ordinal": 10
+									"name": "isFraud",
+									"type": "String"
 								},
 								"sink": {
-									"name": "Columnundefined",
+									"name": "isFraud",
 									"type": "String"
 								}
 							},
 							{
 								"source": {
-									"type": "String",
-									"ordinal": 11
+									"name": "isFlaggedFraud",
+									"type": "String"
 								},
 								"sink": {
-									"name": "Columnundefined",
+									"name": "isFlaggedFraud",
 									"type": "String"
 								}
 							}
