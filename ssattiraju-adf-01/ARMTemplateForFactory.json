@@ -187,7 +187,122 @@
 									"type": "ParquetWriteSettings"
 								}
 							},
-							"enableStaging": false
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "step",
+											"type": "String"
+										},
+										"sink": {
+											"name": "step",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "type",
+											"type": "String"
+										},
+										"sink": {
+											"name": "type",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "amount",
+											"type": "String"
+										},
+										"sink": {
+											"name": "amount",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "nameOrig",
+											"type": "String"
+										},
+										"sink": {
+											"name": "nameOrig",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "oldbalanceOrg",
+											"type": "String"
+										},
+										"sink": {
+											"name": "oldbalanceOrg",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "newbalanceOrig",
+											"type": "String"
+										},
+										"sink": {
+											"name": "newbalanceOrig",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "nameDest",
+											"type": "String"
+										},
+										"sink": {
+											"name": "nameDest",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "oldbalanceDest",
+											"type": "String"
+										},
+										"sink": {
+											"name": "oldbalanceDest",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "newbalanceDest",
+											"type": "String"
+										},
+										"sink": {
+											"name": "newbalanceDest",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "isFraud",
+											"type": "String"
+										},
+										"sink": {
+											"name": "isFraud",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "isFlaggedFraud",
+											"type": "String"
+										},
+										"sink": {
+											"name": "isFlaggedFraud",
+											"type": "String"
+										}
+									}
+								]
+							}
 						},
 						"inputs": [
 							{
@@ -490,6 +605,33 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/GoldDataParquet')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorageDefault",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "gold"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "gold"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorageDefault')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/LookUpTable')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -641,6 +783,7 @@
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
+					"firstRowAsHeader": true,
 					"quoteChar": "\""
 				},
 				"schema": [
@@ -986,6 +1129,31 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/powerquery1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "WranglingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"name": "rawDataCsv",
+							"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> rawDataCsv",
+							"dataset": {
+								"referenceName": "rawDataCsv",
+								"type": "DatasetReference"
+							}
+						}
+					],
+					"script": "section Section1;\r\nshared rawDataCsv = let\r\n  AdfDoc = AzureStorage.DataLakeContents(\"https://ssattirajudemorgstg.dfs.core.windows.net/raw/archive.zip/PS_20174392719_1491204439457_log.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  #\"Promoted headers\" = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  #\"Promoted headers\";\r\nshared UserQuery = let\r\n  Source = rawDataCsv\r\nin\r\n  Source;\r\n",
+					"documentLocale": "en-us"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/rawDataCsv')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/default')]",
 			"type": "Microsoft.DataFactory/factories/managedVirtualNetworks",
 			"apiVersion": "2018-06-01",
@@ -1039,58 +1207,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/powerquery1')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "WranglingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"name": "rawDataCsv",
-							"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~>  rawDataCsv",
-							"dataset": {
-								"referenceName": "rawDataCsv",
-								"type": "DatasetReference"
-							}
-						}
-					],
-					"script": "section Section1;\r\nshared rawDataCsv = let\r\n  AdfDoc = AzureStorage.DataLakeContents(\"https://ssattirajudemorgstg.dfs.core.windows.net/raw/archive.zip/PS_20174392719_1491204439457_log.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  #\"Promoted headers\" = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  #\"Promoted headers\";\r\nshared UserQuery = let\r\n  Source = rawDataCsv\r\nin\r\n  Source;\r\n",
-					"documentLocale": "en-us"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/rawDataCsv')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/GoldDataParquet')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStorageDefault",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "gold"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileSystem": "gold"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorageDefault')]"
 			]
 		}
 	]

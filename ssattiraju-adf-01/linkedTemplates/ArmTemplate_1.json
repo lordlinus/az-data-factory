@@ -71,7 +71,7 @@
 					"sources": [
 						{
 							"name": "rawDataCsv",
-							"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~>  rawDataCsv",
+							"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> rawDataCsv",
 							"dataset": {
 								"referenceName": "rawDataCsv",
 								"type": "DatasetReference"
@@ -123,7 +123,122 @@
 									"type": "ParquetWriteSettings"
 								}
 							},
-							"enableStaging": false
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "step",
+											"type": "String"
+										},
+										"sink": {
+											"name": "step",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "type",
+											"type": "String"
+										},
+										"sink": {
+											"name": "type",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "amount",
+											"type": "String"
+										},
+										"sink": {
+											"name": "amount",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "nameOrig",
+											"type": "String"
+										},
+										"sink": {
+											"name": "nameOrig",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "oldbalanceOrg",
+											"type": "String"
+										},
+										"sink": {
+											"name": "oldbalanceOrg",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "newbalanceOrig",
+											"type": "String"
+										},
+										"sink": {
+											"name": "newbalanceOrig",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "nameDest",
+											"type": "String"
+										},
+										"sink": {
+											"name": "nameDest",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "oldbalanceDest",
+											"type": "String"
+										},
+										"sink": {
+											"name": "oldbalanceDest",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "newbalanceDest",
+											"type": "String"
+										},
+										"sink": {
+											"name": "newbalanceDest",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "isFraud",
+											"type": "String"
+										},
+										"sink": {
+											"name": "isFraud",
+											"type": "String"
+										}
+									},
+									{
+										"source": {
+											"name": "isFlaggedFraud",
+											"type": "String"
+										},
+										"sink": {
+											"name": "isFlaggedFraud",
+											"type": "String"
+										}
+									}
+								]
+							}
 						},
 						"inputs": [
 							{
