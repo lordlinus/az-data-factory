@@ -1,10 +1,6 @@
 {
 	"name": "AzureDatabricksDeltaLakeDatasetSilver",
 	"properties": {
-		"linkedServiceName": {
-			"referenceName": "AzureDatabricksDeltaLake1",
-			"type": "LinkedServiceReference"
-		},
 		"folder": {
 			"name": "silver"
 		},
