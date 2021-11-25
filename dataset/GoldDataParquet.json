@@ -17,6 +17,95 @@
 			},
 			"compressionCodec": "snappy"
 		},
-		"schema": []
+		"schema": [
+			{
+				"name": "Column1",
+				"type": "UTF8"
+			},
+			{
+				"name": "Column2",
+				"type": "UTF8"
+			},
+			{
+				"name": "Column3",
+				"type": "UTF8"
+			},
+			{
+				"name": "Column4",
+				"type": "UTF8"
+			},
+			{
+				"name": "Column5",
+				"type": "UTF8"
+			},
+			{
+				"name": "Column6",
+				"type": "UTF8"
+			},
+			{
+				"name": "Column7",
+				"type": "UTF8"
+			},
+			{
+				"name": "Column8",
+				"type": "UTF8"
+			},
+			{
+				"name": "Column9",
+				"type": "UTF8"
+			},
+			{
+				"name": "Column10",
+				"type": "UTF8"
+			},
+			{
+				"name": "Column11",
+				"type": "UTF8"
+			},
+			{
+				"name": "step",
+				"type": "UTF8"
+			},
+			{
+				"name": "type",
+				"type": "UTF8"
+			},
+			{
+				"name": "amount",
+				"type": "UTF8"
+			},
+			{
+				"name": "nameOrig",
+				"type": "UTF8"
+			},
+			{
+				"name": "oldbalanceOrg",
+				"type": "UTF8"
+			},
+			{
+				"name": "newbalanceOrig",
+				"type": "UTF8"
+			},
+			{
+				"name": "nameDest",
+				"type": "UTF8"
+			},
+			{
+				"name": "oldbalanceDest",
+				"type": "UTF8"
+			},
+			{
+				"name": "newbalanceDest",
+				"type": "UTF8"
+			},
+			{
+				"name": "isFraud",
+				"type": "UTF8"
+			},
+			{
+				"name": "isFlaggedFraud",
+				"type": "UTF8"
+			}
+		]
 	}
 }

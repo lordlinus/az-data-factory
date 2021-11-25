@@ -6,14 +6,14 @@
 			"sources": [
 				{
 					"name": "rawDataCsv",
-					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~>  rawDataCsv",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tignoreNoFilesFound: false) ~> rawDataCsv",
 					"dataset": {
 						"referenceName": "rawDataCsv",
 						"type": "DatasetReference"
 					}
 				}
 			],
-			"script": "section Section1;\r\nshared rawDataCsv = let\r\n  AdfDoc = AzureStorage.DataLakeContents(\"https://ssattirajudemorgstg.dfs.core.windows.net/raw/archive.zip/PS_20174392719_1491204439457_log.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  #\"Promoted headers\" = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  #\"Promoted headers\";\r\nshared UserQuery = let\r\n  Source = rawDataCsv\r\nin\r\n  Source;\r\n",
+			"script": "section Section1;\r\nshared rawDataCsv = let\r\n  AdfDoc = AzureStorage.DataLakeContents(\"https://ssattirajudemorgstg.dfs.core.windows.net/raw/archive.zip/PS_20174392719_1491204439457_log.csv\"),\r\n  Csv = Csv.Document(AdfDoc, [Delimiter = \",\", Encoding = TextEncoding.Utf8, QuoteStyle = QuoteStyle.Csv]),\r\n  PromotedHeaders = Table.PromoteHeaders(Csv, [PromoteAllScalars = true])\r\nin\r\n  PromotedHeaders;\r\nshared UserQuery = let\r\n  Source = rawDataCsv\r\nin\r\n  Source;\r\n",
 			"documentLocale": "en-us"
 		}
 	}

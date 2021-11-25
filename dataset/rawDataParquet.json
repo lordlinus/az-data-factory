@@ -21,7 +21,7 @@
 		"schema": [
 			{
 				"name": "step",
-				"type": "INT32"
+				"type": "UTF8"
 			},
 			{
 				"name": "type",
@@ -29,7 +29,7 @@
 			},
 			{
 				"name": "amount",
-				"type": "DOUBLE"
+				"type": "UTF8"
 			},
 			{
 				"name": "nameOrig",
@@ -37,11 +37,11 @@
 			},
 			{
 				"name": "oldbalanceOrg",
-				"type": "DOUBLE"
+				"type": "UTF8"
 			},
 			{
 				"name": "newbalanceOrig",
-				"type": "DOUBLE"
+				"type": "UTF8"
 			},
 			{
 				"name": "nameDest",
@@ -49,19 +49,19 @@
 			},
 			{
 				"name": "oldbalanceDest",
-				"type": "DOUBLE"
+				"type": "UTF8"
 			},
 			{
 				"name": "newbalanceDest",
-				"type": "DOUBLE"
+				"type": "UTF8"
 			},
 			{
 				"name": "isFraud",
-				"type": "INT32"
+				"type": "UTF8"
 			},
 			{
 				"name": "isFlaggedFraud",
-				"type": "INT32"
+				"type": "UTF8"
 			}
 		]
 	}

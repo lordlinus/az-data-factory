@@ -335,7 +335,7 @@
 										"referenceName": "GoldDataParquet",
 										"type": "DatasetReference"
 									},
-									"script": "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tformat: 'parquet',\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> UserQueryGoldDataParquet"
+									"script": "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\tColumn1 as string,\n\t\tColumn2 as string,\n\t\tColumn3 as string,\n\t\tColumn4 as string,\n\t\tColumn5 as string,\n\t\tColumn6 as string,\n\t\tColumn7 as string,\n\t\tColumn8 as string,\n\t\tColumn9 as string,\n\t\tColumn10 as string,\n\t\tColumn11 as string,\n\t\tstep as string,\n\t\ttype as string,\n\t\tamount as string,\n\t\tnameOrig as string,\n\t\toldbalanceOrg as string,\n\t\tnewbalanceOrig as string,\n\t\tnameDest as string,\n\t\toldbalanceDest as string,\n\t\tnewbalanceDest as string,\n\t\tisFraud as string,\n\t\tisFlaggedFraud as string\n\t),\n\tformat: 'parquet',\n\tumask: 0022,\n\tpreCommands: [],\n\tpostCommands: [],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> UserQueryGoldDataParquet"
 								}
 							]
 						}
