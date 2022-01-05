@@ -5,7 +5,16 @@
 			"referenceName": "HttpServer1",
 			"type": "LinkedServiceReference",
 			"parameters": {
-				"fileToDownload": "german.data"
+				"fileToDownload": {
+					"value": "@dataset().webFileName",
+					"type": "Expression"
+				}
+			}
+		},
+		"parameters": {
+			"webFileName": {
+				"type": "string",
+				"defaultValue": "german.data"
 			}
 		},
 		"annotations": [],
