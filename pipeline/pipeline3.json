@@ -113,7 +113,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"mlPipelineId": "2f0bbe3d-df1d-4c51-a11a-1052e5cca384"
+					"mlPipelineId": "382e21c1-5f22-4b6c-b1b9-9e394fa2da1c"
 				},
 				"linkedServiceName": {
 					"referenceName": "AzureMLService1",
