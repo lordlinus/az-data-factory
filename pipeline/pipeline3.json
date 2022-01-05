@@ -16,11 +16,13 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "ParquetSource",
+						"type": "DelimitedTextSource",
 						"storeSettings": {
-							"type": "AzureBlobFSReadSettings",
-							"recursive": true,
-							"enablePartitionDiscovery": false
+							"type": "HttpReadSettings",
+							"requestMethod": "GET"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
 						}
 					},
 					"sink": {
@@ -46,7 +48,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "GoldDataParquet",
+						"referenceName": "UCI_data_web",
 						"type": "DatasetReference"
 					}
 				],
@@ -58,12 +60,6 @@
 				]
 			}
 		],
-		"parameters": {
-			"fileName": {
-				"type": "string",
-				"defaultValue": "german.data"
-			}
-		},
 		"folder": {
 			"name": "Pipeline-01"
 		},

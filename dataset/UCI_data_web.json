@@ -3,11 +3,9 @@
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "HttpServer1",
-			"type": "LinkedServiceReference"
-		},
-		"parameters": {
-			"fileName": {
-				"type": "string"
+			"type": "LinkedServiceReference",
+			"parameters": {
+				"fileToDownload": "german.data"
 			}
 		},
 		"annotations": [],
