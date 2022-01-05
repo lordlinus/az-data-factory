@@ -35,6 +35,10 @@
 			"type": "string",
 			"defaultValue": "hive"
 		},
+		"HttpServer1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "@{concat('https://archive.ics.uci.edu/ml/machine-learning-databases/statlog/german/',linkedService().fileName)}"
+		},
 		"pvlab-56181f-synapse-WorkspaceDefaultStorage_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://pvlab56181fsynapse.dfs.core.windows.net/"
@@ -81,10 +85,6 @@
 				"ssattdlz01-dev-vault001.vaultcore.azure.net"
 			]
 		},
-		"HttpServer1_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "@{concat('https://archive.ics.uci.edu/ml/machine-learning-databases/statlog/german/',linkedService().fileName)}"
-		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -127,6 +127,9 @@
 					"AzureDataLakeStorageDefault_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorageDefault_properties_typeProperties_url')]"
 					},
+					"HttpServer1_properties_typeProperties_url": {
+						"value": "[parameters('HttpServer1_properties_typeProperties_url')]"
+					},
 					"pvlab-56181f-synapse-WorkspaceDefaultStorage_properties_typeProperties_url": {
 						"value": "[parameters('pvlab-56181f-synapse-WorkspaceDefaultStorage_properties_typeProperties_url')]"
 					},
@@ -156,9 +159,6 @@
 					},
 					"ssattdlz01devvault001_properties_fqdns": {
 						"value": "[parameters('ssattdlz01devvault001_properties_fqdns')]"
-					},
-					"HttpServer1_properties_typeProperties_url": {
-						"value": "[parameters('HttpServer1_properties_typeProperties_url')]"
 					}
 				}
 			},
