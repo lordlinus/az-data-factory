@@ -1,6 +1,11 @@
 {
 	"name": "HttpServer1",
 	"properties": {
+		"parameters": {
+			"fileName": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "HttpServer",
 		"typeProperties": {
