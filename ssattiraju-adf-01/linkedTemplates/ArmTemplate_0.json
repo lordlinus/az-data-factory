@@ -25,7 +25,7 @@
 		},
 		"AzureDataLakeStorageDefault_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://ssattirajudemorgstg.dfs.core.windows.net/"
+			"defaultValue": "https://ssattirajudemorgstg.dfs.core.windows.net"
 		},
 		"pvlab-56181f-synapse-WorkspaceDefaultStorage_properties_typeProperties_url": {
 			"type": "string",
@@ -68,6 +68,10 @@
 			"defaultValue": [
 				"ssattdlz01-dev-vault001.vaultcore.azure.net"
 			]
+		},
+		"HttpServer1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "@{concat('https://archive.ics.uci.edu/ml/machine-learning-databases/statlog/german/',linkedService().fileName)}"
 		}
 	},
 	"variables": {
@@ -280,6 +284,32 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/HttpServer1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"parameters": {
+					"fileName": {
+						"type": "string"
+					}
+				},
+				"annotations": [],
+				"type": "HttpServer",
+				"typeProperties": {
+					"url": "[parameters('HttpServer1_properties_typeProperties_url')]",
+					"enableServerCertificateValidation": false,
+					"authenticationType": "Anonymous"
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime1",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime1')]"
 			]
 		},
 		{
@@ -597,79 +627,6 @@
 					{
 						"name": "isFlaggedFraud",
 						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorageDefault')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/rawDataParquet')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStorageDefault",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "raw"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "parquet",
-						"fileSystem": "raw"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": [
-					{
-						"name": "step",
-						"type": "UTF8"
-					},
-					{
-						"name": "type",
-						"type": "UTF8"
-					},
-					{
-						"name": "amount",
-						"type": "UTF8"
-					},
-					{
-						"name": "nameOrig",
-						"type": "UTF8"
-					},
-					{
-						"name": "oldbalanceOrg",
-						"type": "UTF8"
-					},
-					{
-						"name": "newbalanceOrig",
-						"type": "UTF8"
-					},
-					{
-						"name": "nameDest",
-						"type": "UTF8"
-					},
-					{
-						"name": "oldbalanceDest",
-						"type": "UTF8"
-					},
-					{
-						"name": "newbalanceDest",
-						"type": "UTF8"
-					},
-					{
-						"name": "isFraud",
-						"type": "UTF8"
-					},
-					{
-						"name": "isFlaggedFraud",
-						"type": "UTF8"
 					}
 				]
 			},

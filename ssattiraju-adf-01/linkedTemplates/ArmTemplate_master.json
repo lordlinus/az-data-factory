@@ -21,7 +21,7 @@
 		},
 		"AzureDataLakeStorageDefault_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://ssattirajudemorgstg.dfs.core.windows.net/"
+			"defaultValue": "https://ssattirajudemorgstg.dfs.core.windows.net"
 		},
 		"AzureKeyVault1_properties_typeProperties_baseUrl": {
 			"type": "string",
@@ -80,6 +80,10 @@
 			"defaultValue": [
 				"ssattdlz01-dev-vault001.vaultcore.azure.net"
 			]
+		},
+		"HttpServer1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "@{concat('https://archive.ics.uci.edu/ml/machine-learning-databases/statlog/german/',linkedService().fileName)}"
 		},
 		"containerUri": {
 			"type": "string",
@@ -152,6 +156,9 @@
 					},
 					"ssattdlz01devvault001_properties_fqdns": {
 						"value": "[parameters('ssattdlz01devvault001_properties_fqdns')]"
+					},
+					"HttpServer1_properties_typeProperties_url": {
+						"value": "[parameters('HttpServer1_properties_typeProperties_url')]"
 					}
 				}
 			},

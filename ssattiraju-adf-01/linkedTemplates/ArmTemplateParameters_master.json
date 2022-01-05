@@ -15,7 +15,7 @@
 			"value": ""
 		},
 		"AzureDataLakeStorageDefault_properties_typeProperties_url": {
-			"value": "https://ssattirajudemorgstg.dfs.core.windows.net/"
+			"value": "https://ssattirajudemorgstg.dfs.core.windows.net"
 		},
 		"AzureKeyVault1_properties_typeProperties_baseUrl": {
 			"value": "https://amlworkspace013548041442.vault.azure.net/"
@@ -60,6 +60,9 @@
 			"value": [
 				"ssattdlz01-dev-vault001.vaultcore.azure.net"
 			]
+		},
+		"HttpServer1_properties_typeProperties_url": {
+			"value": "@{concat('https://archive.ics.uci.edu/ml/machine-learning-databases/statlog/german/',linkedService().fileName)}"
 		},
 		"containerUri": {
 			"value": ""

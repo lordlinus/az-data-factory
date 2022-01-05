@@ -25,6 +25,77 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/rawDataParquet')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorageDefault",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "raw"
+				},
+				"annotations": [],
+				"type": "Parquet",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "parquet",
+						"fileSystem": "raw"
+					},
+					"compressionCodec": "snappy"
+				},
+				"schema": [
+					{
+						"name": "step",
+						"type": "UTF8"
+					},
+					{
+						"name": "type",
+						"type": "UTF8"
+					},
+					{
+						"name": "amount",
+						"type": "UTF8"
+					},
+					{
+						"name": "nameOrig",
+						"type": "UTF8"
+					},
+					{
+						"name": "oldbalanceOrg",
+						"type": "UTF8"
+					},
+					{
+						"name": "newbalanceOrig",
+						"type": "UTF8"
+					},
+					{
+						"name": "nameDest",
+						"type": "UTF8"
+					},
+					{
+						"name": "oldbalanceDest",
+						"type": "UTF8"
+					},
+					{
+						"name": "newbalanceDest",
+						"type": "UTF8"
+					},
+					{
+						"name": "isFraud",
+						"type": "UTF8"
+					},
+					{
+						"name": "isFlaggedFraud",
+						"type": "UTF8"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Hive1')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -55,130 +126,57 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pipeline3')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/UCL_Data')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
-					{
-						"name": "UCI Machine Learning Data",
-						"description": "Rest call",
-						"type": "WebActivity",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"url": "https://archive.ics.uci.edu/ml/machine-learning-databases/statlog/german/german.data",
-							"connectVia": {
-								"referenceName": "integrationRuntime1",
-								"type": "IntegrationRuntimeReference"
-							},
-							"method": "GET",
-							"headers": {}
-						}
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorageDefault",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "UCI_data",
+						"fileSystem": "raw"
 					},
-					{
-						"name": "Blob Data",
-						"description": "rest call",
-						"type": "WebActivity",
-						"dependsOn": [
-							{
-								"activity": "UCI Machine Learning Data",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"url": "https://ssattirajudemorgstg.blob.core.windows.net/raw/UCI_data",
-							"connectVia": {
-								"referenceName": "integrationRuntime1",
-								"type": "IntegrationRuntimeReference"
-							},
-							"method": "PUT",
-							"headers": {},
-							"body": {
-								"value": "@activity('UCI Machine Learning Data').output.Data",
-								"type": "Expression"
-							},
-							"linkedServices": [
-								{
-									"referenceName": "AzureDataLakeStorageDefault",
-									"type": "LinkedServiceReference"
-								}
-							],
-							"authentication": {
-								"type": "ServicePrincipal",
-								"userTenant": "72f988bf-86f1-41af-91ab-2d7cd011db47",
-								"username": "628106d6-3c99-4479-b647-b143b564b7f7",
-								"resource": "/subscriptions/7c1d967f-37f1-4047-bef7-05af9aa80fe2/resourceGroups/demo-rg-01/providers/Microsoft.KeyVault/vaults/amlworkspace013548041442",
-								"password": {
-									"type": "AzureKeyVaultSecret",
-									"store": {
-										"referenceName": "AzureKeyVault1",
-										"type": "LinkedServiceReference"
-									},
-									"secretName": "clientSecret"
-								}
-							}
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
 				},
-				"folder": {
-					"name": "Pipeline-01"
-				},
-				"annotations": []
+				"schema": []
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/triggerOnFileUploadDataSet-01')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
+			"name": "[concat(parameters('factoryName'), '/UCI_data_web')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "pipeline3",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
+				"linkedServiceName": {
+					"referenceName": "HttpServer1",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"fileName": {
+						"type": "string"
 					}
-				],
-				"type": "BlobEventsTrigger",
+				},
+				"annotations": [],
+				"type": "DelimitedText",
 				"typeProperties": {
-					"blobPathBeginsWith": "/raw/blobs/",
-					"blobPathEndsWith": "xlsx",
-					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('triggerOnFileUploadDataSet-01_properties_typeProperties_scope')]",
-					"events": [
-						"Microsoft.Storage.BlobCreated"
-					]
-				}
+					"location": {
+						"type": "HttpServerLocation"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": []
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/pipeline3')]"
-			]
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
@@ -247,6 +245,88 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline3')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "HttpReadSettings",
+									"requestMethod": "GET"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "UCI_data_web",
+								"type": "DatasetReference",
+								"parameters": {
+									"fileName": "german.data"
+								}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "UCL_Data",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"folder": {
+					"name": "Pipeline-01"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/UCI_data_web')]",
+				"[concat(variables('factoryId'), '/datasets/UCL_Data')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/pipeline2')]",
@@ -626,8 +706,40 @@
 				"annotations": []
 			},
 			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/rawDataParquet')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow1')]",
 				"[concat(variables('factoryId'), '/dataflows/powerquery1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/triggerOnFileUploadDataSet-01')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "pipeline3",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/raw/blobs/",
+					"blobPathEndsWith": "xlsx",
+					"ignoreEmptyBlobs": true,
+					"scope": "[parameters('triggerOnFileUploadDataSet-01_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/pipeline3')]"
 			]
 		}
 	]
