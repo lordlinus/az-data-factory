@@ -9,7 +9,7 @@
 		"annotations": [],
 		"type": "HttpServer",
 		"typeProperties": {
-			"url": "https://archive.ics.uci.edu/ml/machine-learning-databases/statlog/german/",
+			"url": "@{concat('https://archive.ics.uci.edu/ml/machine-learning-databases/statlog/german/',linkedService().fileName)}",
 			"enableServerCertificateValidation": false,
 			"authenticationType": "Anonymous"
 		},
