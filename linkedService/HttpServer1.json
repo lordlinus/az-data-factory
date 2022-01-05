@@ -2,8 +2,9 @@
 	"name": "HttpServer1",
 	"properties": {
 		"parameters": {
-			"fileName": {
-				"type": "String"
+			"fileToDownload": {
+				"type": "String",
+				"defaultValue": "german.data"
 			}
 		},
 		"annotations": [],
