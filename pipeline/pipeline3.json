@@ -63,7 +63,7 @@
 				]
 			},
 			{
-				"name": "Data flow1",
+				"name": "Clean Data",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
@@ -94,11 +94,11 @@
 				}
 			},
 			{
-				"name": "Machine Learning Execute Pipeline1",
+				"name": "Machine Learning Pipeline",
 				"type": "AzureMLExecutePipeline",
 				"dependsOn": [
 					{
-						"activity": "Data flow1",
+						"activity": "Clean Data",
 						"dependencyConditions": [
 							"Succeeded"
 						]
