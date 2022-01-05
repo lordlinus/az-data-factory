@@ -3,9 +3,8 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "UCI Machine Learning Data",
-				"description": "Rest call",
-				"type": "WebActivity",
+				"name": "Copy data1",
+				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "7.00:00:00",
@@ -16,49 +15,24 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"url": "https://archive.ics.uci.edu/ml/machine-learning-databases/statlog/german/german.data",
-					"connectVia": {
-						"referenceName": "integrationRuntime1",
-						"type": "IntegrationRuntimeReference"
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "HttpReadSettings",
+							"requestMethod": "GET"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
 					},
-					"method": "GET"
-				}
-			},
-			{
-				"name": "Blob Data",
-				"description": "rest call",
-				"type": "WebActivity",
-				"dependsOn": [
-					{
-						"activity": "UCI Machine Learning Data",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
+					"enableStaging": false
 				},
-				"userProperties": [],
-				"typeProperties": {
-					"url": "https://ssattirajudemorgstg.blob.core.windows.net/?sv=2020-08-04&ss=b&srt=sco&sp=rwdlacx&se=2022-01-05T15:00:21Z&st=2022-01-05T07:00:21Z&spr=https&sig=fcUwQ8JAZFlyTS2cKeiXCXUPNJ8yWEaf2rEQO%2FY9xTo%3D&comp=list&restype=container",
-					"connectVia": {
-						"referenceName": "integrationRuntime1",
-						"type": "IntegrationRuntimeReference"
-					},
-					"method": "PUT",
-					"headers": {
-						"x-ms-blob-type": "PageBlob"
-					},
-					"body": {
-						"value": "@activity('UCI Machine Learning Data').output.Response",
-						"type": "Expression"
+				"inputs": [
+					{
+						"referenceName": "UCI_data_web",
+						"type": "DatasetReference"
 					}
-				}
+				]
 			}
 		],
 		"folder": {
