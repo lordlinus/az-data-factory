@@ -3,13 +3,13 @@
 	"properties": {
 		"parameters": {
 			"fileName": {
-				"type": "string"
+				"type": "String"
 			}
 		},
 		"annotations": [],
 		"type": "HttpServer",
 		"typeProperties": {
-			"url": "@{concat('https://archive.ics.uci.edu/ml/machine-learning-databases/statlog/german/',linkedService().fileName)}",
+			"url": "@{concat('https://archive.ics.uci.edu/ml/machine-learning-databases/statlog/german/',linkedService().fileName}",
 			"enableServerCertificateValidation": false,
 			"authenticationType": "Anonymous"
 		},
