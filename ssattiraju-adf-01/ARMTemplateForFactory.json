@@ -1273,7 +1273,10 @@
 								"referenceName": "UCI_data_web",
 								"type": "DatasetReference",
 								"parameters": {
-									"fileName": "german.data"
+									"fileName": {
+										"value": "@pipeline().parameters.fileName",
+										"type": "Expression"
+									}
 								}
 							}
 						],
@@ -1289,6 +1292,11 @@
 				"policy": {
 					"elapsedTimeMetric": {},
 					"cancelAfter": {}
+				},
+				"parameters": {
+					"fileName": {
+						"type": "string"
+					}
 				},
 				"folder": {
 					"name": "Pipeline-01"
