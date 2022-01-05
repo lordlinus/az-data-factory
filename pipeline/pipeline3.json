@@ -60,6 +60,12 @@
 							"referenceName": "AzureDataLakeStorageDefault",
 							"type": "LinkedServiceReference"
 						}
+					],
+					"datasets": [
+						{
+							"referenceName": "UCL_Data",
+							"type": "DatasetReference"
+						}
 					]
 				}
 			}

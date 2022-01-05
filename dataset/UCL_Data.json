@@ -1,0 +1,22 @@
+{
+	"name": "UCL_Data",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureDataLakeStorageDefault",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "UCI_data",
+				"fileSystem": "raw"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
