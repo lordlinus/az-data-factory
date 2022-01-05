@@ -45,7 +45,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"url": "https://ssattirajudemorgstg.blob.core.windows.net/raw/UCI_data",
+					"url": "https://ssattirajudemorgstg.blob.core.windows.net/raw?sp=rawl&st=2022-01-05T07:00:24Z&se=2022-02-05T15:29:24Z&spr=https&sv=2020-08-04&sr=c&sig=SPwwaXItlOvcASAKznY74FnOvSMmQP4RppzSBEHu4ak%3D",
 					"connectVia": {
 						"referenceName": "integrationRuntime1",
 						"type": "IntegrationRuntimeReference"
