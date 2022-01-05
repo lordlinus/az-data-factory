@@ -55,6 +55,12 @@
 						"value": "@activity('UCI Machine Learning Data').output.Response",
 						"type": "Expression"
 					},
+					"linkedServices": [
+						{
+							"referenceName": "AzureDataLakeStorageDefault",
+							"type": "LinkedServiceReference"
+						}
+					],
 					"authentication": {
 						"type": "ServicePrincipal",
 						"userTenant": "72f988bf-86f1-41af-91ab-2d7cd011db47",
