@@ -10,7 +10,7 @@
 		"type": "HttpServer",
 		"typeProperties": {
 			"url": "https://archive.ics.uci.edu/ml/machine-learning-databases/statlog/german/",
-			"enableServerCertificateValidation": true,
+			"enableServerCertificateValidation": false,
 			"authenticationType": "Anonymous"
 		},
 		"connectVia": {
