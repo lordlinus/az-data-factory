@@ -6,7 +6,7 @@
 		"pipelines": [],
 		"type": "BlobEventsTrigger",
 		"typeProperties": {
-			"blobPathBeginsWith": "/dataset-01/blobs/",
+			"blobPathBeginsWith": "/raw/blobs/",
 			"blobPathEndsWith": "xlsx",
 			"ignoreEmptyBlobs": true,
 			"scope": "/subscriptions/7c1d967f-37f1-4047-bef7-05af9aa80fe2/resourceGroups/demo-rg-01/providers/Microsoft.Storage/storageAccounts/ssattirajudemorgstg",
