@@ -52,7 +52,7 @@
 						"type": "DatasetReference",
 						"parameters": {
 							"fileName": {
-								"value": "@trim('german.data')",
+								"value": "@pipeline().parameters.fileName",
 								"type": "Expression"
 							}
 						}
@@ -66,6 +66,11 @@
 				]
 			}
 		],
+		"parameters": {
+			"fileName": {
+				"type": "string"
+			}
+		},
 		"folder": {
 			"name": "Pipeline-01"
 		},
