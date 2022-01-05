@@ -68,7 +68,8 @@
 		],
 		"parameters": {
 			"fileName": {
-				"type": "string"
+				"type": "string",
+				"defaultValue": "german.data"
 			}
 		},
 		"folder": {
