@@ -27,7 +27,7 @@
 			"value": "hive"
 		},
 		"HttpServer1_properties_typeProperties_url": {
-			"value": "@{concat('https://archive.ics.uci.edu/ml/machine-learning-databases/statlog/german/',linkedService().fileName)}"
+			"value": "@{concat('https://archive.ics.uci.edu/ml/machine-learning-databases/statlog/german/',linkedService().fileToDownload)}"
 		},
 		"pvlab-56181f-synapse-WorkspaceDefaultStorage_properties_typeProperties_url": {
 			"value": "https://pvlab56181fsynapse.dfs.core.windows.net/"

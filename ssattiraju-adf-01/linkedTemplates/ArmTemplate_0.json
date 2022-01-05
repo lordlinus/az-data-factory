@@ -29,7 +29,7 @@
 		},
 		"HttpServer1_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "@{concat('https://archive.ics.uci.edu/ml/machine-learning-databases/statlog/german/',linkedService().fileName)}"
+			"defaultValue": "@{concat('https://archive.ics.uci.edu/ml/machine-learning-databases/statlog/german/',linkedService().fileToDownload)}"
 		},
 		"pvlab-56181f-synapse-WorkspaceDefaultStorage_properties_typeProperties_url": {
 			"type": "string",
@@ -200,8 +200,9 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"parameters": {
-					"fileName": {
-						"type": "String"
+					"fileToDownload": {
+						"type": "String",
+						"defaultValue": "german.data"
 					}
 				},
 				"annotations": [],
@@ -539,11 +540,18 @@
 			"properties": {
 				"linkedServiceName": {
 					"referenceName": "HttpServer1",
-					"type": "LinkedServiceReference"
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"fileToDownload": {
+							"value": "@dataset().webFileName",
+							"type": "Expression"
+						}
+					}
 				},
 				"parameters": {
-					"fileName": {
-						"type": "string"
+					"webFileName": {
+						"type": "string",
+						"defaultValue": "german.data"
 					}
 				},
 				"annotations": [],
