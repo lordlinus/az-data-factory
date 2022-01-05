@@ -16,13 +16,11 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "DelimitedTextSource",
+						"type": "ParquetSource",
 						"storeSettings": {
-							"type": "HttpReadSettings",
-							"requestMethod": "GET"
-						},
-						"formatSettings": {
-							"type": "DelimitedTextReadSettings"
+							"type": "AzureBlobFSReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
 						}
 					},
 					"sink": {
@@ -48,14 +46,8 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "UCI_data_web",
-						"type": "DatasetReference",
-						"parameters": {
-							"fileName": {
-								"value": "@pipeline().parameters.fileName",
-								"type": "Expression"
-							}
-						}
+						"referenceName": "GoldDataParquet",
+						"type": "DatasetReference"
 					}
 				],
 				"outputs": [
