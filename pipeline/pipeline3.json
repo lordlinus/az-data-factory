@@ -52,7 +52,7 @@
 					},
 					"method": "PUT",
 					"body": {
-						"value": "@activity('UCI Machine Learning Data').output.Data",
+						"value": "@activity('UCI Machine Learning Data').output.Response",
 						"type": "Expression"
 					},
 					"linkedServices": [
