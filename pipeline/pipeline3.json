@@ -49,7 +49,10 @@
 				"inputs": [
 					{
 						"referenceName": "UCI_data_web",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"webFileName": "german.data"
+						}
 					}
 				],
 				"outputs": [
