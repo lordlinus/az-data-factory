@@ -92,6 +92,33 @@
 					},
 					"traceLevel": "Fine"
 				}
+			},
+			{
+				"name": "Machine Learning Execute Pipeline1",
+				"type": "AzureMLExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Data flow1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"mlPipelineId": "2f0bbe3d-df1d-4c51-a11a-1052e5cca384"
+				},
+				"linkedServiceName": {
+					"referenceName": "AzureMLService1",
+					"type": "LinkedServiceReference"
+				}
 			}
 		],
 		"folder": {
