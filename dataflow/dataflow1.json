@@ -18,7 +18,7 @@
 					"name": "Parse1"
 				}
 			],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tlimit: 100,\n\tignoreNoFilesFound: false,\n\twildcardPaths:['UCI_data/']) ~> GermanDataSource\nGermanDataSource parse({_col0_} = ERROR_FUNCTION(''),\n\tformat: 'delimited',\n\tcolumnNamesAsHeader: false,\n\tcolumnDelimiter: 'undefined',\n\tnullValue: '') ~> Parse1"
+			"script": "source(output(\n\t\t{_col0_} as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tlimit: 100,\n\tignoreNoFilesFound: false,\n\trowUrlColumn: 'filename',\n\twildcardPaths:['UCI_data/']) ~> GermanDataSource\nGermanDataSource parse({_col0_} = {_col0_} ? (col1 as string,\n\t\tcol2 as integer,\n\t\tcol3 as string,\n\t\tcol4 as string,\n\t\tcol5 as integer,\n\t\tcol6 as string,\n\t\tcol7 as string,\n\t\tcol8 as integer,\n\t\tcol9 as string,\n\t\tcol10 as string,\n\t\tcol11 as integer,\n\t\tcol12 as string,\n\t\tcol13 as integer,\n\t\tcol14 as string,\n\t\tcol15 as string,\n\t\tcol16 as integer,\n\t\tcol17 as string,\n\t\tcol18 as integer,\n\t\tcol19 as string,\n\t\tcol20 as string,\n\t\tcol21 as integer),\n\tformat: 'delimited',\n\tcolumnNamesAsHeader: false,\n\tcolumnDelimiter: ' ',\n\tnullValue: '') ~> Parse1"
 		}
 	}
 }
