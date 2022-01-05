@@ -4,6 +4,7 @@
 		"activities": [
 			{
 				"name": "UCI Machine Learning Data",
+				"description": "Rest call",
 				"type": "WebActivity",
 				"dependsOn": [],
 				"policy": {
@@ -17,7 +18,7 @@
 				"typeProperties": {
 					"url": "https://archive.ics.uci.edu/ml/machine-learning-databases/statlog/german/german.data",
 					"connectVia": {
-						"referenceName": "AutoResolveIntegrationRuntime",
+						"referenceName": "integrationRuntime1",
 						"type": "IntegrationRuntimeReference"
 					},
 					"method": "GET"
@@ -25,6 +26,7 @@
 			},
 			{
 				"name": "Blob Data",
+				"description": "rest call",
 				"type": "WebActivity",
 				"dependsOn": [
 					{
