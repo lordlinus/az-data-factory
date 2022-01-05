@@ -51,7 +51,10 @@
 						"referenceName": "UCI_data_web",
 						"type": "DatasetReference",
 						"parameters": {
-							"fileName": "german.data"
+							"fileName": {
+								"value": "@trim('german.data')",
+								"type": "Expression"
+							}
 						}
 					}
 				],
