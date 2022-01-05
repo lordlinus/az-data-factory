@@ -45,7 +45,7 @@
 				},
 				"userProperties": [],
 				"typeProperties": {
-					"url": "https://ssattirajudemorgstg.blob.core.windows.net/raw?sp=rawl&st=2022-01-05T07:00:24Z&se=2022-02-05T15:29:24Z&spr=https&sv=2020-08-04&sr=c&sig=SPwwaXItlOvcASAKznY74FnOvSMmQP4RppzSBEHu4ak%3D",
+					"url": "https://ssattirajudemorgstg.blob.core.windows.net/raw?sv=2020-08-04&ss=b&srt=sco&sp=rwdlacx&se=2022-01-05T15:48:21Z&st=2022-01-05T07:48:21Z&spr=https&sig=VJnVfdqyeDunaxmXCeBTiKpwOcQc5Y1tfZfEDzLBdKU%3D&comp=list&restype=container",
 					"connectVia": {
 						"referenceName": "integrationRuntime1",
 						"type": "IntegrationRuntimeReference"
@@ -57,13 +57,7 @@
 					"body": {
 						"value": "@activity('UCI Machine Learning Data').output.Response",
 						"type": "Expression"
-					},
-					"linkedServices": [
-						{
-							"referenceName": "AzureDataLakeStorageDefault",
-							"type": "LinkedServiceReference"
-						}
-					]
+					}
 				}
 			}
 		],
