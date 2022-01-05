@@ -9,12 +9,16 @@
 						"referenceName": "UCL_Data",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "GermanDataSource"
 				}
 			],
 			"sinks": [],
-			"transformations": [],
-			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tlimit: 100,\n\tignoreNoFilesFound: false) ~> source1"
+			"transformations": [
+				{
+					"name": "Parse1"
+				}
+			],
+			"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tlimit: 100,\n\tignoreNoFilesFound: false,\n\twildcardPaths:['UCI_data/']) ~> GermanDataSource\nGermanDataSource parse({_col0_} = ERROR_FUNCTION(''),\n\tformat: 'delimited',\n\tcolumnNamesAsHeader: false,\n\tcolumnDelimiter: 'undefined',\n\tnullValue: '') ~> Parse1"
 		}
 	}
 }
