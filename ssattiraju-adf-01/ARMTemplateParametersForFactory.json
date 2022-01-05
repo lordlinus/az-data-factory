@@ -20,6 +20,15 @@
 		"AzureKeyVault1_properties_typeProperties_baseUrl": {
 			"value": "https://amlworkspace013548041442.vault.azure.net/"
 		},
+		"AzureMLService1_properties_typeProperties_subscriptionId": {
+			"value": "7c1d967f-37f1-4047-bef7-05af9aa80fe2"
+		},
+		"AzureMLService1_properties_typeProperties_resourceGroupName": {
+			"value": "demo-rg-01"
+		},
+		"AzureMLService1_properties_typeProperties_mlWorkspaceName": {
+			"value": "aml-workspace-01"
+		},
 		"Hive1_properties_typeProperties_host": {
 			"value": "13.76.133.55"
 		},
@@ -63,15 +72,6 @@
 			"value": [
 				"ssattdlz01-dev-vault001.vaultcore.azure.net"
 			]
-		},
-		"AzureMLService1_properties_typeProperties_subscriptionId": {
-			"value": "7c1d967f-37f1-4047-bef7-05af9aa80fe2"
-		},
-		"AzureMLService1_properties_typeProperties_resourceGroupName": {
-			"value": "demo-rg-01"
-		},
-		"AzureMLService1_properties_typeProperties_mlWorkspaceName": {
-			"value": "aml-workspace-01"
 		}
 	}
 }

@@ -25,6 +25,41 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/UCI_data_web')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "HttpServer1",
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"fileToDownload": {
+							"value": "@dataset().webFileName",
+							"type": "Expression"
+						}
+					}
+				},
+				"parameters": {
+					"webFileName": {
+						"type": "string",
+						"defaultValue": "german.data"
+					}
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "HttpServerLocation"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/UCL_Data')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -249,29 +284,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/UCI_Data_Parquet')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDataLakeStorageDefault",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Parquet",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"folderPath": "UCI_data",
-						"fileSystem": "bronze"
-					},
-					"compressionCodec": "snappy"
-				},
-				"schema": []
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -311,8 +323,7 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/UCL_Data')]",
-				"[concat(variables('factoryId'), '/datasets/UCI_Data_Parquet')]"
+				"[concat(variables('factoryId'), '/datasets/UCL_Data')]"
 			]
 		},
 		{
@@ -847,7 +858,7 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"mlPipelineId": "2f0bbe3d-df1d-4c51-a11a-1052e5cca384"
+							"mlPipelineId": "382e21c1-5f22-4b6c-b1b9-9e394fa2da1c"
 						},
 						"linkedServiceName": {
 							"referenceName": "AzureMLService1",
@@ -865,6 +876,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/UCI_data_web')]",
 				"[concat(variables('factoryId'), '/datasets/UCL_Data')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow1')]"
 			]

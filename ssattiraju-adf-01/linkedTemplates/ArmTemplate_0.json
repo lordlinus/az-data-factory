@@ -27,6 +27,18 @@
 			"type": "string",
 			"defaultValue": "https://ssattirajudemorgstg.dfs.core.windows.net"
 		},
+		"AzureMLService1_properties_typeProperties_subscriptionId": {
+			"type": "string",
+			"defaultValue": "7c1d967f-37f1-4047-bef7-05af9aa80fe2"
+		},
+		"AzureMLService1_properties_typeProperties_resourceGroupName": {
+			"type": "string",
+			"defaultValue": "demo-rg-01"
+		},
+		"AzureMLService1_properties_typeProperties_mlWorkspaceName": {
+			"type": "string",
+			"defaultValue": "aml-workspace-01"
+		},
 		"HttpServer1_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "@{concat('https://archive.ics.uci.edu/ml/machine-learning-databases/statlog/german/',linkedService().fileToDownload)}"
@@ -72,18 +84,6 @@
 			"defaultValue": [
 				"ssattdlz01-dev-vault001.vaultcore.azure.net"
 			]
-		},
-		"AzureMLService1_properties_typeProperties_subscriptionId": {
-			"type": "string",
-			"defaultValue": "7c1d967f-37f1-4047-bef7-05af9aa80fe2"
-		},
-		"AzureMLService1_properties_typeProperties_resourceGroupName": {
-			"type": "string",
-			"defaultValue": "demo-rg-01"
-		},
-		"AzureMLService1_properties_typeProperties_mlWorkspaceName": {
-			"type": "string",
-			"defaultValue": "aml-workspace-01"
 		}
 	},
 	"variables": {
@@ -196,6 +196,28 @@
 						"value": "[parameters('AzureDatabricks1_accessToken')]"
 					},
 					"existingClusterId": "1119-063356-b59rji71"
+				},
+				"connectVia": {
+					"referenceName": "integrationRuntime1",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureMLService1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureMLService",
+				"typeProperties": {
+					"subscriptionId": "[parameters('AzureMLService1_properties_typeProperties_subscriptionId')]",
+					"resourceGroupName": "[parameters('AzureMLService1_properties_typeProperties_resourceGroupName')]",
+					"mlWorkspaceName": "[parameters('AzureMLService1_properties_typeProperties_mlWorkspaceName')]",
+					"authentication": "MSI"
 				},
 				"connectVia": {
 					"referenceName": "integrationRuntime1",
@@ -323,28 +345,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureMLService1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureMLService",
-				"typeProperties": {
-					"subscriptionId": "[parameters('AzureMLService1_properties_typeProperties_subscriptionId')]",
-					"resourceGroupName": "[parameters('AzureMLService1_properties_typeProperties_resourceGroupName')]",
-					"mlWorkspaceName": "[parameters('AzureMLService1_properties_typeProperties_mlWorkspaceName')]",
-					"authentication": "MSI"
-				},
-				"connectVia": {
-					"referenceName": "integrationRuntime1",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime1')]"
 			]
 		},
 		{
@@ -568,40 +568,28 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/UCI_data_web')]",
+			"name": "[concat(parameters('factoryName'), '/UCI_Data_Parquet')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "HttpServer1",
-					"type": "LinkedServiceReference",
-					"parameters": {
-						"fileToDownload": {
-							"value": "@dataset().webFileName",
-							"type": "Expression"
-						}
-					}
-				},
-				"parameters": {
-					"webFileName": {
-						"type": "string",
-						"defaultValue": "german.data"
-					}
+					"referenceName": "AzureDataLakeStorageDefault",
+					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
-				"type": "DelimitedText",
+				"type": "Parquet",
 				"typeProperties": {
 					"location": {
-						"type": "HttpServerLocation"
+						"type": "AzureBlobFSLocation",
+						"folderPath": "UCI_data",
+						"fileSystem": "bronze"
 					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"quoteChar": "\""
+					"compressionCodec": "snappy"
 				},
 				"schema": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/HttpServer1')]"
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorageDefault')]"
 			]
 		}
 	]
