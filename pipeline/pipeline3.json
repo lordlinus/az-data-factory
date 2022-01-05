@@ -59,7 +59,7 @@
 						"type": "ServicePrincipal",
 						"userTenant": "72f988bf-86f1-41af-91ab-2d7cd011db47",
 						"username": "628106d6-3c99-4479-b647-b143b564b7f7",
-						"resource": "/subscriptions/7c1d967f-37f1-4047-bef7-05af9aa80fe2/resourceGroups/demo-rg-01/providers/Microsoft.KeyVault/vaults/amlworkspace013548041442",
+						"resource": "",
 						"password": {
 							"type": "AzureKeyVaultSecret",
 							"store": {
