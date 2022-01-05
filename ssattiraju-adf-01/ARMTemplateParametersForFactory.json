@@ -11,11 +11,14 @@
 		"AzureDatabricks1_accessToken": {
 			"value": ""
 		},
-		"AzureDatabricksDeltaLake1_accessToken": {
+		"pvlab-56181f-synapse-WorkspaceDefaultSqlServer_connectionString": {
 			"value": ""
 		},
 		"AzureDataLakeStorageDefault_properties_typeProperties_url": {
 			"value": "https://ssattirajudemorgstg.dfs.core.windows.net/"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"value": "https://amlworkspace013548041442.vault.azure.net/"
 		},
 		"Hive1_properties_typeProperties_host": {
 			"value": "13.76.133.55"
@@ -23,8 +26,11 @@
 		"Hive1_properties_typeProperties_username": {
 			"value": "hive"
 		},
+		"pvlab-56181f-synapse-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"value": "https://pvlab56181fsynapse.dfs.core.windows.net/"
+		},
 		"triggerOnFileUploadDataSet-01_properties_typeProperties_scope": {
-			"value": "/subscriptions/7c1d967f-37f1-4047-bef7-05af9aa80fe2/resourceGroups/genting-rg/providers/Microsoft.Storage/storageAccounts/rawdatablobstg01"
+			"value": "/subscriptions/7c1d967f-37f1-4047-bef7-05af9aa80fe2/resourceGroups/demo-rg-01/providers/Microsoft.Storage/storageAccounts/ssattirajudemorgstg"
 		},
 		"ssattdlz01devencur_properties_privateLinkResourceId": {
 			"value": "/subscriptions/7c1d967f-37f1-4047-bef7-05af9aa80fe2/resourceGroups/ssattdlz01-dev-storage/providers/Microsoft.Storage/storageAccounts/ssattdlz01devencur"

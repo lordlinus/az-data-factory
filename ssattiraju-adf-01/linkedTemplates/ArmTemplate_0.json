@@ -15,13 +15,21 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accessToken' of 'AzureDatabricks1'"
 		},
-		"AzureDatabricksDeltaLake1_accessToken": {
+		"pvlab-56181f-synapse-WorkspaceDefaultSqlServer_connectionString": {
 			"type": "secureString",
-			"metadata": "Secure string for 'accessToken' of 'AzureDatabricksDeltaLake1'"
+			"metadata": "Secure string for 'connectionString' of 'pvlab-56181f-synapse-WorkspaceDefaultSqlServer'"
+		},
+		"AzureKeyVault1_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://amlworkspace013548041442.vault.azure.net/"
 		},
 		"AzureDataLakeStorageDefault_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://ssattirajudemorgstg.dfs.core.windows.net/"
+		},
+		"pvlab-56181f-synapse-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://pvlab56181fsynapse.dfs.core.windows.net/"
 		},
 		"ssattdlz01devencur_properties_privateLinkResourceId": {
 			"type": "string",
@@ -60,20 +68,44 @@
 			"defaultValue": [
 				"ssattdlz01-dev-vault001.vaultcore.azure.net"
 			]
-		},
-		"Hive1_properties_typeProperties_host": {
-			"type": "string",
-			"defaultValue": "13.76.133.55"
-		},
-		"Hive1_properties_typeProperties_username": {
-			"type": "string",
-			"defaultValue": "hive"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureKeyVault1')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('AzureKeyVault1_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AutoResolveIntegrationRuntime')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "Managed",
+				"typeProperties": {
+					"computeProperties": {
+						"location": "AutoResolve",
+						"dataFlowProperties": {
+							"computeType": "General",
+							"coreCount": 8,
+							"timeToLive": 0
+						}
+					}
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/integrationRuntime1')]",
 			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
@@ -91,6 +123,16 @@
 						}
 					}
 				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/WorkspaceSystemIdentity')]",
+			"type": "Microsoft.DataFactory/factories/credentials",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "ManagedIdentity",
+				"typeProperties": {}
 			},
 			"dependsOn": []
 		},
@@ -149,19 +191,19 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureDatabricksDeltaLake1')]",
+			"name": "[concat(parameters('factoryName'), '/pvlab-56181f-synapse-WorkspaceDefaultSqlServer')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"annotations": [],
-				"type": "AzureDatabricksDeltaLake",
-				"typeProperties": {
-					"domain": "https://adb-748061744436624.4.azuredatabricks.net",
-					"clusterId": "1119-063356-b59rji71",
-					"accessToken": {
-						"type": "SecureString",
-						"value": "[parameters('AzureDatabricksDeltaLake1_accessToken')]"
+				"parameters": {
+					"DBName": {
+						"type": "String"
 					}
+				},
+				"annotations": [],
+				"type": "AzureSqlDW",
+				"typeProperties": {
+					"connectionString": "[parameters('pvlab-56181f-synapse-WorkspaceDefaultSqlServer_connectionString')]"
 				},
 				"connectVia": {
 					"referenceName": "integrationRuntime1",
@@ -173,28 +215,22 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AutoResolveIntegrationRuntime')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"name": "[concat(parameters('factoryName'), '/pvlab-56181f-synapse-WorkspaceDefaultStorage')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"type": "Managed",
+				"annotations": [],
+				"type": "AzureBlobFS",
 				"typeProperties": {
-					"computeProperties": {
-						"location": "AutoResolve",
-						"dataFlowProperties": {
-							"computeType": "General",
-							"coreCount": 8,
-							"timeToLive": 0
-						}
-					}
+					"url": "[parameters('pvlab-56181f-synapse-WorkspaceDefaultStorage_properties_typeProperties_url')]"
 				},
-				"managedVirtualNetwork": {
-					"type": "ManagedVirtualNetworkReference",
-					"referenceName": "default"
+				"connectVia": {
+					"referenceName": "integrationRuntime1",
+					"type": "IntegrationRuntimeReference"
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime1')]"
 			]
 		},
 		{
@@ -247,75 +283,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureDatabricksDeltaLakeDatasetSilver')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AzureDatabricksDeltaLake1",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "silver"
-				},
-				"annotations": [],
-				"type": "AzureDatabricksDeltaLakeDataset",
-				"typeProperties": {
-					"database": "delta",
-					"table": "kaggle_silver_data"
-				},
-				"schema": [
-					{
-						"name": "step",
-						"type": "integer"
-					},
-					{
-						"name": "type",
-						"type": "string"
-					},
-					{
-						"name": "amount",
-						"type": "double"
-					},
-					{
-						"name": "nameOrig",
-						"type": "string"
-					},
-					{
-						"name": "oldbalanceOrg",
-						"type": "double"
-					},
-					{
-						"name": "newbalanceOrig",
-						"type": "double"
-					},
-					{
-						"name": "nameDest",
-						"type": "string"
-					},
-					{
-						"name": "oldbalanceDest",
-						"type": "double"
-					},
-					{
-						"name": "newbalanceDest",
-						"type": "double"
-					},
-					{
-						"name": "isFraud",
-						"type": "integer"
-					},
-					{
-						"name": "isFlaggedFraud",
-						"type": "integer"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AzureDatabricksDeltaLake1')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/GoldDataParquet')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -336,7 +303,96 @@
 					},
 					"compressionCodec": "snappy"
 				},
-				"schema": []
+				"schema": [
+					{
+						"name": "Column1",
+						"type": "UTF8"
+					},
+					{
+						"name": "Column2",
+						"type": "UTF8"
+					},
+					{
+						"name": "Column3",
+						"type": "UTF8"
+					},
+					{
+						"name": "Column4",
+						"type": "UTF8"
+					},
+					{
+						"name": "Column5",
+						"type": "UTF8"
+					},
+					{
+						"name": "Column6",
+						"type": "UTF8"
+					},
+					{
+						"name": "Column7",
+						"type": "UTF8"
+					},
+					{
+						"name": "Column8",
+						"type": "UTF8"
+					},
+					{
+						"name": "Column9",
+						"type": "UTF8"
+					},
+					{
+						"name": "Column10",
+						"type": "UTF8"
+					},
+					{
+						"name": "Column11",
+						"type": "UTF8"
+					},
+					{
+						"name": "step",
+						"type": "UTF8"
+					},
+					{
+						"name": "type",
+						"type": "UTF8"
+					},
+					{
+						"name": "amount",
+						"type": "UTF8"
+					},
+					{
+						"name": "nameOrig",
+						"type": "UTF8"
+					},
+					{
+						"name": "oldbalanceOrg",
+						"type": "UTF8"
+					},
+					{
+						"name": "newbalanceOrig",
+						"type": "UTF8"
+					},
+					{
+						"name": "nameDest",
+						"type": "UTF8"
+					},
+					{
+						"name": "oldbalanceDest",
+						"type": "UTF8"
+					},
+					{
+						"name": "newbalanceDest",
+						"type": "UTF8"
+					},
+					{
+						"name": "isFraud",
+						"type": "UTF8"
+					},
+					{
+						"name": "isFlaggedFraud",
+						"type": "UTF8"
+					}
+				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorageDefault')]"
@@ -499,36 +555,47 @@
 				},
 				"schema": [
 					{
+						"name": "step",
 						"type": "String"
 					},
 					{
+						"name": "type",
 						"type": "String"
 					},
 					{
+						"name": "amount",
 						"type": "String"
 					},
 					{
+						"name": "nameOrig",
 						"type": "String"
 					},
 					{
+						"name": "oldbalanceOrg",
 						"type": "String"
 					},
 					{
+						"name": "newbalanceOrig",
 						"type": "String"
 					},
 					{
+						"name": "nameDest",
 						"type": "String"
 					},
 					{
+						"name": "oldbalanceDest",
 						"type": "String"
 					},
 					{
+						"name": "newbalanceDest",
 						"type": "String"
 					},
 					{
+						"name": "isFraud",
 						"type": "String"
 					},
 					{
+						"name": "isFlaggedFraud",
 						"type": "String"
 					}
 				]
@@ -562,7 +629,7 @@
 				"schema": [
 					{
 						"name": "step",
-						"type": "INT32"
+						"type": "UTF8"
 					},
 					{
 						"name": "type",
@@ -570,7 +637,7 @@
 					},
 					{
 						"name": "amount",
-						"type": "DOUBLE"
+						"type": "UTF8"
 					},
 					{
 						"name": "nameOrig",
@@ -578,11 +645,11 @@
 					},
 					{
 						"name": "oldbalanceOrg",
-						"type": "DOUBLE"
+						"type": "UTF8"
 					},
 					{
 						"name": "newbalanceOrig",
-						"type": "DOUBLE"
+						"type": "UTF8"
 					},
 					{
 						"name": "nameDest",
@@ -590,127 +657,24 @@
 					},
 					{
 						"name": "oldbalanceDest",
-						"type": "DOUBLE"
+						"type": "UTF8"
 					},
 					{
 						"name": "newbalanceDest",
-						"type": "DOUBLE"
+						"type": "UTF8"
 					},
 					{
 						"name": "isFraud",
-						"type": "INT32"
+						"type": "UTF8"
 					},
 					{
 						"name": "isFlaggedFraud",
-						"type": "INT32"
+						"type": "UTF8"
 					}
 				]
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorageDefault')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Hive1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "Hive",
-				"typeProperties": {
-					"host": "[parameters('Hive1_properties_typeProperties_host')]",
-					"port": 10000,
-					"serverType": "HiveServer2",
-					"thriftTransportProtocol": "HTTP",
-					"authenticationType": "Username",
-					"serviceDiscoveryMode": false,
-					"useNativeQuery": false,
-					"username": "[parameters('Hive1_properties_typeProperties_username')]",
-					"password": false,
-					"enableSsl": false,
-					"storageReference": {
-						"referenceName": "AzureDataLakeStorageDefault",
-						"type": "LinkedServiceReference"
-					}
-				},
-				"connectVia": {
-					"referenceName": "integrationRuntime1",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime1')]",
-				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorageDefault')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Copy OnPrem to Raw",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "BinarySource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": true
-								},
-								"formatSettings": {
-									"type": "BinaryReadSettings",
-									"compressionProperties": {
-										"type": "ZipDeflateReadSettings"
-									}
-								}
-							},
-							"sink": {
-								"type": "BinarySink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "OnPremCompressedData",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "rawDataBinary",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {},
-					"cancelAfter": {}
-				},
-				"folder": {
-					"name": "Pipeline-01"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/OnPremCompressedData')]",
-				"[concat(variables('factoryId'), '/datasets/rawDataBinary')]"
 			]
 		}
 	]
